@@ -32,21 +32,13 @@ th,td{padding:12px;text-align:left;border-bottom:1px solid #ddd;}
 th{background:#003366;color:white;}
 tr:hover{background:#f5f5f5;}
 .login-form{max-width:400px;margin:50px auto;}
-.admin-grid{display:grid;grid-template-columns:1fr 2fr;gap:20px;}
 .devotional-content{background:#f9faff;border-left:5px solid #ffaa00;padding:25px;border-radius:12px;margin-top:20px;}
 .devotional-title{font-size:1.8rem;color:#00264d;border-bottom:2px solid #ffaa00;padding-bottom:8px;}
 .daily-quote{background:#f0f7e8;padding:15px;border-radius:8px;margin:15px 0;border-left:4px solid #2e7d32;}
 .hymn-section{background:#fff4e5;padding:15px;border-radius:8px;margin:15px 0;}
 .prayer-points{background:#e8f0fe;padding:15px 25px;border-radius:12px;}
 .prayer-points li{margin-bottom:8px;}
-.tab-bar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
-.tab{background:#ddd;padding:10px 20px;cursor:pointer;border-radius:5px;transition:all 0.3s;}
-.tab.active{background:#003366;color:white;}
-.admin-panel{display:none;}
-.admin-panel.active{display:block;}
 #admin{scroll-margin-top:60px;}
-.devotional-selector{margin:20px 0;display:flex;align-items:center;gap:15px;flex-wrap:wrap;}
-
 /* Pastor image styles */
 .pastor-grid {
     display: flex;
@@ -98,6 +90,89 @@ tr:hover{background:#f5f5f5;}
     border-radius: 30px;
     font-size: 0.9rem;
 }
+
+/* Admin panel simplified */
+.admin-panel { display: block; }
+#adminPassword { margin-bottom: 15px; }
+
+/* ---------- Calendar Styles ---------- */
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.month-year {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #00264d;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.weekday {
+    text-align: center;
+    font-weight: 600;
+    color: #003366;
+    padding: 8px;
+    background: #e6edf5;
+    border-radius: 6px;
+}
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f9f9f9;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+    padding: 5px;
+}
+.calendar-day:hover {
+    background: #ffaa00;
+    color: #000;
+    transform: scale(1.02);
+}
+.calendar-day.selected {
+    border-color: #003366;
+    background: #cce4ff;
+    font-weight: 600;
+}
+.calendar-day.has-devotional {
+    background: #d4edda;
+    color: #155724;
+    border-color: #28a745;
+}
+.calendar-day.empty {
+    background: transparent;
+    cursor: default;
+    box-shadow: none;
+    border: none;
+}
+.day-number {
+    font-size: 1.1rem;
+}
+.devotional-indicator {
+    font-size: 0.8rem;
+    margin-top: 2px;
+}
+.current-day {
+    background: #ffaa00 !important;
+    color: #000;
+    font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -129,11 +204,11 @@ tr:hover{background:#f5f5f5;}
 <section id="home" class="hero">
 <h2>Welcome to TWEMI</h2>
 <p>Raising True Worshippers | Transforming Lives | Impacting Nations</p>
-<!-- AUDIO PLAYER ADDED HERE (visible on home) -->
+<!-- AUDIO PLAYER -->
 <div class="audio-player">
     <span class="audio-label">🎧 Listen: Sunday Sermon</span>
     <audio controls controlsList="nodownload">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://www.dropbox.com/scl/fi/2pwkm4llw461wfgvxvuu4/Owe-You-Praise-Live-feat.-Tope-Alabi-Livingvoices.m4a?rlkey=rg1aif2m5ro6japsbf1g4l8te&st=dy9ntqec&dl=1" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
     <small style="color:#003366;">"The Power of True Worship"</small>
@@ -151,13 +226,11 @@ tr:hover{background:#f5f5f5;}
 <h2>Our Pastors</h2>
 <div class="pastor-grid">
     <div class="pastor-card">
-        <!-- Apostle image (Unsplash) -->
         <img class="pastor-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f4d?w=400&h=400&fit=crop" alt="Apostle Solomon S. Adebowale">
         <h3>Apostle Solomon S. Adebowale</h3>
         <p>Founder and Lead Apostle committed to revival and apostolic teaching.</p>
     </div>
     <div class="pastor-card">
-        <!-- Rev. Mrs image (Unsplash) -->
         <img class="pastor-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop" alt="Rev. Mrs Deborah Funmilayo Adebowale">
         <h3>Rev. Mrs Deborah Funmilayo Adebowale</h3>
         <p>Co-Founder and Author of Sequences of God Daily Devotionals.</p>
@@ -171,16 +244,24 @@ tr:hover{background:#f5f5f5;}
 <div class="card"><p><strong>Sunday Worship:</strong> 9:00 AM</p><p><strong>Midweek Service:</strong> Wednesday 5:00 PM</p><p><strong>Prayer Night:</strong> Friday 10:00 PM</p></div>
 </section>
 
-<!-- DEVOTIONAL SECTION -->
+<!-- DEVOTIONAL SECTION with CALENDAR -->
 <section id="devotional">
     <h2>📖 Daily Devotional – Sequences of God</h2>
     <div class="card">
-        <div class="devotional-selector">
-            <label for="viewDaySelect"><strong>Select Day (1-31):</strong></label>
-            <select id="viewDaySelect" style="padding:10px;border-radius:5px;min-width:150px;"></select>
+        <!-- Calendar Navigation -->
+        <div class="calendar-nav">
+            <button onclick="changeMonth(-1)">◀ Prev</button>
+            <span class="month-year" id="displayMonthYear">March 2026</span>
+            <button onclick="changeMonth(1)">Next ▶</button>
         </div>
-        <div id="devotionalDisplay" class="devotional-content">
-            <p>Select a day to view devotional</p>
+        <!-- Weekday Headers -->
+        <div class="calendar-grid" id="calendarGrid">
+            <div class="weekday">Sun</div><div class="weekday">Mon</div><div class="weekday">Tue</div>
+            <div class="weekday">Wed</div><div class="weekday">Thu</div><div class="weekday">Fri</div><div class="weekday">Sat</div>
+        </div>
+        <!-- Devotional display area below calendar -->
+        <div id="devotionalDisplay" class="devotional-content" style="margin-top:25px;">
+            <p>Select a date from the calendar to view the devotional.</p>
         </div>
     </div>
 </section>
@@ -219,42 +300,23 @@ tr:hover{background:#f5f5f5;}
 </div>
 </section>
 
-<!-- ADMIN SECTION (unchanged but functional) -->
+<!-- ADMIN SECTION - Simplified: only upload and delete -->
 <section id="admin" style="display:none;">
     <h2>Admin Dashboard</h2>
-    <div class="tab-bar">
-        <div class="tab active" onclick="switchAdminTab('login')" id="tab-login">Login</div>
-        <div class="tab" onclick="switchAdminTab('dashboard')" id="tab-dashboard">Dashboard</div>
-        <div class="tab" onclick="switchAdminTab('upload')" id="tab-upload">Upload Devotional</div>
+    
+    <!-- Simple login area -->
+    <div class="card login-form" id="adminLoginBlock">
+        <h2>Admin Login</h2>
+        <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+        <button onclick="adminLogin()">Login</button>
+        <p style="margin-top:10px;color:#666;">Default: twemi2026</p>
     </div>
     
-    <!-- Login Form -->
-    <div id="admin-login" class="admin-panel active">
-        <div class="card login-form">
-            <h2>Admin Login</h2>
-            <input type="password" id="adminPassword" placeholder="Enter Admin Password">
-            <button onclick="adminLogin()">Login</button>
-            <p style="margin-top:10px;color:#666;">: <strong></strong></p>
-        </div>
-    </div>
-    
-    <!-- Dashboard -->
-    <div id="admin-dashboard" class="admin-panel">
+    <!-- Admin controls (shown after login) -->
+    <div id="adminControls" style="display:none;">
+        <!-- Upload Form -->
         <div class="card">
-            <h2>Manage Devotionals</h2>
-            <div style="margin:20px 0;">
-                <button class="success" onclick="exportDevotionals()">📥 Export Backup</button>
-                <button onclick="document.getElementById('importFile').click()">📤 Import Backup</button>
-                <input type="file" id="importFile" accept=".json" style="display:none;" onchange="handleFileImport()">
-            </div>
-            <div id="devotionalList"></div>
-        </div>
-    </div>
-    
-    <!-- Upload Form -->
-    <div id="admin-upload" class="admin-panel">
-        <div class="card">
-            <h2 id="formTitle">Upload New Devotional</h2>
+            <h2 id="formTitle">Upload / Edit Devotional</h2>
             <form id="devotionalForm" onsubmit="return saveDevotional(event)">
                 <input type="hidden" id="editId" value="">
                 
@@ -286,6 +348,12 @@ tr:hover{background:#f5f5f5;}
                 <button type="button" class="danger" onclick="clearForm()">🗑️ Clear Form</button>
             </form>
         </div>
+        
+        <!-- Devotional List with Delete buttons -->
+        <div class="card">
+            <h2>Manage Existing Devotionals</h2>
+            <div id="devotionalList"></div>
+        </div>
     </div>
 </section>
 
@@ -295,6 +363,12 @@ tr:hover{background:#f5f5f5;}
 // ==================== GLOBAL VARIABLES ====================
 let isAdminLoggedIn = false;
 const ADMIN_PASSWORD = "twemi2026";
+
+// Calendar state
+let currentDate = new Date();
+let currentYear = currentDate.getFullYear();
+let currentMonth = currentDate.getMonth(); // 0-11
+let selectedDay = currentDate.getDate();   // 1-31
 
 // ==================== DATE DISPLAY ====================
 function updateDate() {
@@ -320,9 +394,12 @@ function showAdminSection() {
     document.getElementById('admin').style.display = 'block';
     document.getElementById('admin').scrollIntoView({behavior: 'smooth'});
     if(!isAdminLoggedIn) {
-        switchAdminTab('login');
+        document.getElementById('adminLoginBlock').style.display = 'block';
+        document.getElementById('adminControls').style.display = 'none';
     } else {
-        switchAdminTab('dashboard');
+        document.getElementById('adminLoginBlock').style.display = 'none';
+        document.getElementById('adminControls').style.display = 'block';
+        loadDevotionalList();
     }
 }
 
@@ -334,11 +411,11 @@ function getDevotionals() {
 
 function saveDevotionals(devotionals) {
     localStorage.setItem('twemi_devotionals', JSON.stringify(devotionals));
-    refreshDevotionalView();
+    renderCalendar(); // Update calendar after saving
     if(isAdminLoggedIn) loadDevotionalList();
 }
 
-// Initialize with sample data
+// Initialize with sample data (using day numbers, months are ignored, just days 1-31)
 function initSampleData() {
     let devotionals = getDevotionals();
     if(devotionals.length === 0) {
@@ -371,25 +448,82 @@ function initSampleData() {
 }
 initSampleData();
 
-// ==================== DEVOTIONAL DISPLAY ====================
-function refreshDevotionalView() {
-    const select = document.getElementById('viewDaySelect');
-    if(!select) return;
+// ==================== CALENDAR FUNCTIONS ====================
+function renderCalendar() {
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+    document.getElementById('displayMonthYear').innerText = `${monthNames[currentMonth]} ${currentYear}`;
     
-    const devotionals = getDevotionals();
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // 0 = Sunday
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     
-    select.innerHTML = '';
-    for(let i = 1; i <= 31; i++) {
-        const option = document.createElement('option');
-        option.value = i;
-        const exists = devotionals.some(d => d.dayNumber === i);
-        option.textContent = `Day ${i} ${exists ? '📖' : '⏳'}`;
-        select.appendChild(option);
+    const grid = document.getElementById('calendarGrid');
+    // Remove old day cells (keep the 7 weekday headers)
+    while(grid.children.length > 7) {
+        grid.removeChild(grid.lastChild);
     }
     
-    showDevotional(parseInt(select.value) || 1);
+    const devotionals = getDevotionals();
+    const today = new Date();
+    const isCurrentMonth = (today.getMonth() === currentMonth && today.getFullYear() === currentYear);
+    
+    // Empty cells before first day
+    for(let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'calendar-day empty';
+        grid.appendChild(emptyCell);
+    }
+    
+    // Days of month
+    for(let d = 1; d <= daysInMonth; d++) {
+        const cell = document.createElement('div');
+        cell.className = 'calendar-day';
+        if(isCurrentMonth && d === today.getDate()) {
+            cell.classList.add('current-day');
+        }
+        if(selectedDay === d) {
+            cell.classList.add('selected');
+        }
+        
+        // Check if devotional exists for this day (dayNumber)
+        const hasDevotional = devotionals.some(dev => dev.dayNumber === d);
+        if(hasDevotional) {
+            cell.classList.add('has-devotional');
+        }
+        
+        cell.setAttribute('data-day', d);
+        cell.onclick = function() { selectDay(d); };
+        
+        cell.innerHTML = `<span class="day-number">${d}</span>
+            ${hasDevotional ? '<span class="devotional-indicator">📖</span>' : ''}`;
+        
+        grid.appendChild(cell);
+    }
 }
 
+function selectDay(day) {
+    selectedDay = day;
+    renderCalendar(); // re-render to update selected style
+    showDevotional(day);
+}
+
+function changeMonth(delta) {
+    currentMonth += delta;
+    if(currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    } else if(currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    renderCalendar();
+    // Optionally, if current selected day exists in new month, keep it, else reset to 1
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    if(selectedDay > daysInMonth) selectedDay = 1;
+    selectDay(selectedDay); // This will refresh devotional display
+}
+
+// ==================== DEVOTIONAL DISPLAY ====================
 function showDevotional(day) {
     const devotionals = getDevotionals();
     const data = devotionals.find(d => d.dayNumber === day);
@@ -413,27 +547,13 @@ function showDevotional(day) {
 }
 
 // ==================== ADMIN FUNCTIONS ====================
-function switchAdminTab(tab) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
-    
-    document.getElementById(`tab-${tab}`).classList.add('active');
-    document.getElementById(`admin-${tab}`).classList.add('active');
-    
-    if(tab === 'dashboard' && isAdminLoggedIn) {
-        loadDevotionalList();
-    }
-    if(tab === 'upload') {
-        clearForm();
-    }
-}
-
 function adminLogin() {
     const pwd = document.getElementById('adminPassword').value;
     if(pwd === ADMIN_PASSWORD) {
         isAdminLoggedIn = true;
-        alert('Login successful!');
-        switchAdminTab('dashboard');
+        document.getElementById('adminLoginBlock').style.display = 'none';
+        document.getElementById('adminControls').style.display = 'block';
+        loadDevotionalList();
     } else {
         alert('Invalid password. Default password is: twemi2026');
     }
@@ -472,7 +592,8 @@ function loadDevotionalList() {
 function uploadForDay(day) {
     clearForm();
     document.getElementById('dayNumber').value = day;
-    switchAdminTab('upload');
+    document.getElementById('formTitle').innerText = `Upload Devotional - Day ${day}`;
+    document.getElementById('devotionalForm').scrollIntoView({behavior: 'smooth'});
 }
 
 function editDevotional(day) {
@@ -491,7 +612,7 @@ function editDevotional(day) {
     document.getElementById('prayerPoints').value = data.prayerPoints;
     
     document.getElementById('formTitle').innerText = `Edit Devotional - Day ${day}`;
-    switchAdminTab('upload');
+    document.getElementById('devotionalForm').scrollIntoView({behavior: 'smooth'});
 }
 
 function clearForm() {
@@ -547,7 +668,9 @@ function saveDevotional(event) {
     saveDevotionals(devotionals);
     alert('Devotional saved successfully!');
     clearForm();
-    switchAdminTab('dashboard');
+    loadDevotionalList();
+    // If the saved day is currently selected, refresh display
+    if(selectedDay === dayNumber) showDevotional(dayNumber);
     return false;
 }
 
@@ -557,52 +680,15 @@ function deleteDevotional(day) {
         devotionals = devotionals.filter(d => d.dayNumber !== day);
         saveDevotionals(devotionals);
         loadDevotionalList();
-        refreshDevotionalView();
+        // If the deleted day was selected, show empty message
+        if(selectedDay === day) showDevotional(day);
     }
-}
-
-function exportDevotionals() {
-    const data = getDevotionals();
-    const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `twemi_devotionals_backup_${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-}
-
-function handleFileImport() {
-    const file = document.getElementById('importFile').files[0];
-    if(!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const data = JSON.parse(e.target.result);
-            if(Array.isArray(data)) {
-                localStorage.setItem('twemi_devotionals', JSON.stringify(data));
-                alert('Devotionals imported successfully!');
-                refreshDevotionalView();
-                if(isAdminLoggedIn) loadDevotionalList();
-            } else {
-                alert('Invalid file format');
-            }
-        } catch(err) {
-            alert('Error reading file: ' + err.message);
-        }
-    };
-    reader.readAsText(file);
-    document.getElementById('importFile').value = '';
 }
 
 // ==================== INITIALIZATION ====================
 window.onload = function() {
-    refreshDevotionalView();
-    
-    document.getElementById('viewDaySelect').addEventListener('change', function(e) {
-        showDevotional(parseInt(e.target.value));
-    });
+    renderCalendar();
+    selectDay(selectedDay); // Show today's devotional if exists, else coming soon
     
     document.getElementById('admin').style.display = 'none';
 };
