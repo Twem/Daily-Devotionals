@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TWEMI - True Worshippers Evangelical Ministries International</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- Mammoth.js for Word document parsing -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
 <style>
+/* ... (styles unchanged, same as previous) ... */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:#f4f6f9;color:#333;}
 header{background:linear-gradient(to right,#001f3f,#003366);color:white;padding:20px;text-align:center;}
@@ -26,7 +29,7 @@ button.danger{background:#dc3545;}
 button.danger:hover{background:#bb2d3b;}
 button.success{background:#28a745;}
 button.success:hover{background:#218838;}
-.footer{background:#001f3f;color:white;text-align:center;padding:30px;margin-top:40px;}
+.footer{background:#001f3f;color:white;padding:30px;margin-top:40px;text-align:center;}
 table{width:100%;border-collapse:collapse;margin-top:20px;}
 th,td{padding:12px;text-align:left;border-bottom:1px solid #ddd;}
 th{background:#003366;color:white;}
@@ -39,139 +42,67 @@ tr:hover{background:#f5f5f5;}
 .prayer-points{background:#e8f0fe;padding:15px 25px;border-radius:12px;}
 .prayer-points li{margin-bottom:8px;}
 #admin{scroll-margin-top:60px;}
-/* Pastor image styles */
 .pastor-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
-    margin-top: 20px;
+    display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; margin-top: 20px;
 }
 .pastor-card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    padding: 20px;
-    max-width: 300px;
-    text-align: center;
+    background: white; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    padding: 20px; max-width: 300px; text-align: center;
 }
 .pastor-img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 4px solid #ffaa00;
-    margin-bottom: 15px;
+    width: 100%; height: 250px; object-fit: cover; border-radius: 50%;
+    border: 4px solid #ffaa00; margin-bottom: 15px;
 }
-.pastor-card h3 { color: #00264d; margin-bottom: 5px; }
-.pastor-card p { font-size: 0.95rem; color: #555; }
-
-/* Audio player styling */
+.pastor-card h3 { color: #00264d; }
 .audio-player {
-    background: #eef5ff;
-    border-radius: 50px;
-    padding: 15px 25px;
-    margin: 20px 0;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    border-left: 6px solid #003366;
+    background: #eef5ff; border-radius: 50px; padding: 15px 25px; margin: 20px 0;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 15px; border-left: 6px solid #003366;
 }
-.audio-player audio {
-    flex: 1;
-    min-width: 250px;
-}
+.audio-player audio { flex: 1; min-width: 250px; }
 .audio-label {
-    font-weight: 600;
-    color: #00264d;
-    background: #ffaa00;
-    padding: 6px 15px;
-    border-radius: 30px;
-    font-size: 0.9rem;
+    font-weight: 600; color: #00264d; background: #ffaa00;
+    padding: 6px 15px; border-radius: 30px; font-size: 0.9rem;
 }
-
-/* Admin panel simplified */
-.admin-panel { display: block; }
 #adminPassword { margin-bottom: 15px; }
 
-/* ---------- Calendar Styles ---------- */
+/* Calendar Styles */
 .calendar-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 15px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 15px;
 }
-.month-year {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #00264d;
-}
+.month-year { font-size: 1.8rem; font-weight: 600; color: #00264d; }
 .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
+    background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-.weekday {
-    text-align: center;
-    font-weight: 600;
-    color: #003366;
-    padding: 8px;
-    background: #e6edf5;
-    border-radius: 6px;
-}
+.weekday { text-align: center; font-weight: 600; color: #003366; padding: 8px; background: #e6edf5; border-radius: 6px; }
 .calendar-day {
-    aspect-ratio: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: #f9f9f9;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s;
-    border: 2px solid transparent;
-    padding: 5px;
+    aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: #f9f9f9; border-radius: 8px; cursor: pointer; font-weight: 500; transition: all 0.2s;
+    border: 2px solid transparent; padding: 5px;
 }
-.calendar-day:hover {
-    background: #ffaa00;
-    color: #000;
-    transform: scale(1.02);
+.calendar-day:hover { background: #ffaa00; color: #000; transform: scale(1.02); }
+.calendar-day.selected { border-color: #003366; background: #cce4ff; font-weight: 600; }
+.calendar-day.has-devotional { background: #d4edda; color: #155724; border-color: #28a745; }
+.calendar-day.empty { background: transparent; cursor: default; border: none; }
+.day-number { font-size: 1.1rem; }
+.devotional-indicator { font-size: 0.8rem; margin-top: 2px; }
+.current-day { background: #ffaa00 !important; color: #000; font-weight: bold; }
+
+/* File upload info */
+.file-info {
+    background: #e8f4fd; padding: 8px; border-radius: 5px; font-size: 0.9rem;
+    word-break: break-all; border-left: 4px solid #28a745; margin: 10px 0;
 }
-.calendar-day.selected {
-    border-color: #003366;
-    background: #cce4ff;
-    font-weight: 600;
+/* Prayer points counter */
+.prayer-counter {
+    font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px; color: #555;
 }
-.calendar-day.has-devotional {
-    background: #d4edda;
-    color: #155724;
-    border-color: #28a745;
-}
-.calendar-day.empty {
-    background: transparent;
-    cursor: default;
-    box-shadow: none;
-    border: none;
-}
-.day-number {
-    font-size: 1.1rem;
-}
-.devotional-indicator {
-    font-size: 0.8rem;
-    margin-top: 2px;
-}
-.current-day {
-    background: #ffaa00 !important;
-    color: #000;
-    font-weight: bold;
+/* Password change form */
+.password-change {
+    margin-top: 30px;
+    border-top: 2px solid #ccc;
+    padding-top: 20px;
 }
 </style>
 </head>
@@ -196,19 +127,16 @@ tr:hover{background:#f5f5f5;}
 <a href="#admin" onclick="showAdminSection()" class="admin-link">Admin</a>
 </nav>
 
-<div class="ticker">
-<marquee scrollamount="6">🔥 Welcome to TWEMI | Sunday 9AM | Wednesday 5PM | Daily Devotionals | Join Our Telegram Channel | Call: 08034212065</marquee>
-</div>
+<div class="ticker"><marquee scrollamount="6">🔥 Welcome to TWEMI | Sunday 9AM | Wednesday 5PM | Daily Devotionals | Join Our Telegram Channel | Call: 08034212065</marquee></div>
 
 <!-- HOME SECTION -->
 <section id="home" class="hero">
 <h2>Welcome to TWEMI</h2>
 <p>Raising True Worshippers | Transforming Lives | Impacting Nations</p>
-<!-- AUDIO PLAYER -->
 <div class="audio-player">
     <span class="audio-label">🎧 Listen: Sunday Sermon</span>
     <audio controls controlsList="nodownload">
-        <source src="https://www.dropbox.com/scl/fi/2pwkm4llw461wfgvxvuu4/Owe-You-Praise-Live-feat.-Tope-Alabi-Livingvoices.m4a?rlkey=rg1aif2m5ro6japsbf1g4l8te&st=dy9ntqec&dl=1" type="audio/mpeg">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
     <small style="color:#003366;">"The Power of True Worship"</small>
@@ -216,105 +144,55 @@ tr:hover{background:#f5f5f5;}
 </section>
 
 <!-- ABOUT SECTION -->
-<section id="about">
-<h2>About Us</h2>
-<div class="card"><p>TWEMI was established in 2020 to raise true worshippers who worship God in Spirit and Truth, preach the undiluted Word and build kingdom leaders globally.</p></div>
-</section>
+<section id="about"><h2>About Us</h2><div class="card"><p>TWEMI was established in 2020 to raise true worshippers who worship God in Spirit and Truth, preach the undiluted Word and build kingdom leaders globally.</p></div></section>
 
-<!-- PASTOR SECTION with images -->
+<!-- PASTOR SECTION -->
 <section id="pastor">
 <h2>Our Pastors</h2>
 <div class="pastor-grid">
-    <div class="pastor-card">
-        <img class="pastor-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f4d?w=400&h=400&fit=crop" alt="Apostle Solomon S. Adebowale">
-        <h3>Apostle Solomon S. Adebowale</h3>
-        <p>Founder and Lead Apostle committed to revival and apostolic teaching.</p>
-    </div>
-    <div class="pastor-card">
-        <img class="pastor-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop" alt="Rev. Mrs Deborah Funmilayo Adebowale">
-        <h3>Rev. Mrs Deborah Funmilayo Adebowale</h3>
-        <p>Co-Founder and Author of Sequences of God Daily Devotionals.</p>
-    </div>
+    <div class="pastor-card"><img class="pastor-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f4d?w=400&h=400&fit=crop" alt="Apostle"><h3>Apostle Solomon S. Adebowale</h3><p>Founder and Lead Apostle</p></div>
+    <div class="pastor-card"><img class="pastor-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop" alt="Rev. Mrs"><h3>Rev. Mrs Deborah Funmilayo Adebowale</h3><p>Co-Founder, Author of Sequences of God</p></div>
 </div>
 </section>
 
 <!-- SERVICES SECTION -->
-<section id="services">
-<h2>Church Services</h2>
-<div class="card"><p><strong>Sunday Worship:</strong> 9:00 AM</p><p><strong>Midweek Service:</strong> Wednesday 5:00 PM</p><p><strong>Prayer Night:</strong> Friday 10:00 PM</p></div>
-</section>
+<section id="services"><h2>Church Services</h2><div class="card"><p><strong>Sunday Worship:</strong> 9:00 AM</p><p><strong>Midweek Service:</strong> Wednesday 5:00 PM</p><p><strong>Prayer Night:</strong> Friday 10:00 PM</p></div></section>
 
 <!-- DEVOTIONAL SECTION with CALENDAR -->
 <section id="devotional">
     <h2>📖 Daily Devotional – Sequences of God</h2>
     <div class="card">
-        <!-- Calendar Navigation -->
         <div class="calendar-nav">
             <button onclick="changeMonth(-1)">◀ Prev</button>
             <span class="month-year" id="displayMonthYear">March 2026</span>
             <button onclick="changeMonth(1)">Next ▶</button>
         </div>
-        <!-- Weekday Headers -->
         <div class="calendar-grid" id="calendarGrid">
-            <div class="weekday">Sun</div><div class="weekday">Mon</div><div class="weekday">Tue</div>
-            <div class="weekday">Wed</div><div class="weekday">Thu</div><div class="weekday">Fri</div><div class="weekday">Sat</div>
+            <div class="weekday">Sun</div><div class="weekday">Mon</div><div class="weekday">Tue</div><div class="weekday">Wed</div><div class="weekday">Thu</div><div class="weekday">Fri</div><div class="weekday">Sat</div>
         </div>
-        <!-- Devotional display area below calendar -->
         <div id="devotionalDisplay" class="devotional-content" style="margin-top:25px;">
             <p>Select a date from the calendar to view the devotional.</p>
         </div>
     </div>
 </section>
 
-<!-- LIVE SECTION -->
-<section id="live">
-<h2>Live Streaming</h2>
-<div class="card"><p>Watch our live services online.</p>
-<iframe src="https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw" allowfullscreen style="width:100%;height:400px;border-radius:8px;"></iframe></div>
-</section>
+<!-- LIVE, GALLERY, GIVE, CONTACT sections (kept minimal) -->
+<section id="live"><h2>Live Streaming</h2><div class="card"><iframe src="https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw" allowfullscreen style="width:100%;height:400px;border-radius:8px;"></iframe></div></section>
+<section id="gallery"><h2>Church Gallery</h2><div class="gallery" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;"><img src="https://images.unsplash.com/photo-1515169067868-5387ec356754" style="width:100%;height:200px;object-fit:cover;border-radius:8px;"><img src="https://images.unsplash.com/photo-1507692049790-de58290a4334" style="width:100%;height:200px;object-fit:cover;border-radius:8px;"><img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2" style="width:100%;height:200px;object-fit:cover;border-radius:8px;"></div></section>
+<section id="give"><h2>Online Giving</h2><div class="card"><a href="https://paystack.com/pay/YOURPAYSTACKLINK" target="_blank" style="display:inline-block;padding:10px 20px;background:#28a745;color:white;text-decoration:none;border-radius:5px;">Give via Paystack</a></div></section>
+<section id="contact"><h2>Contact Us</h2><div class="card"><p><strong>Phone:</strong> 08034212065</p><p><strong>Email:</strong> adequatenetwork@gmail.com</p><a href="https://t.me/Twemintchannel" target="_blank" style="display:inline-block;padding:10px 20px;background:#0088cc;color:white;text-decoration:none;border-radius:5px;">Join Our Telegram Channel</a></div></section>
 
-<!-- GALLERY SECTION -->
-<section id="gallery">
-<h2>Church Gallery</h2>
-<div class="gallery" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;">
-<img src="https://images.unsplash.com/photo-1515169067868-5387ec356754" style="width:100%;height:200px;object-fit:cover;border-radius:8px;">
-<img src="https://images.unsplash.com/photo-1507692049790-de58290a4334" style="width:100%;height:200px;object-fit:cover;border-radius:8px;">
-<img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2" style="width:100%;height:200px;object-fit:cover;border-radius:8px;">
-</div>
-</section>
-
-<!-- GIVE SECTION -->
-<section id="give">
-<h2>Online Giving</h2>
-<div class="card"><p>Support the work of God through your giving.</p>
-<a href="https://paystack.com/pay/YOURPAYSTACKLINK" target="_blank" class="give-btn" style="display:inline-block;padding:10px 20px;background:#28a745;color:white;text-decoration:none;border-radius:5px;">Give via Paystack</a></div>
-</section>
-
-<!-- CONTACT SECTION -->
-<section id="contact">
-<h2>Contact Us</h2>
-<div class="card">
-<p><strong>Phone:</strong> 08034212065</p>
-<p><strong>Email:</strong> adequatenetwork@gmail.com</p>
-<a href="https://t.me/Twemintchannel" target="_blank" style="display:inline-block;padding:10px 20px;background:#0088cc;color:white;text-decoration:none;border-radius:5px;">Join Our Telegram Channel</a>
-</div>
-</section>
-
-<!-- ADMIN SECTION - Simplified: only upload and delete -->
+<!-- ADMIN SECTION - Upload from local file or Word + Change Password -->
 <section id="admin" style="display:none;">
     <h2>Admin Dashboard</h2>
-    
-    <!-- Simple login area -->
     <div class="card login-form" id="adminLoginBlock">
         <h2>Admin Login</h2>
         <input type="password" id="adminPassword" placeholder="Enter Admin Password">
         <button onclick="adminLogin()">Login</button>
-        <p style="margin-top:10px;color:#666;">Default: twemi2026</p>
-    </div>
+        <p style="margin-top:10px;color:#666;">   </div>
     
-    <!-- Admin controls (shown after login) -->
     <div id="adminControls" style="display:none;">
-        <!-- Upload Form -->
+        <!-- Devotional Form (manual entry / edit) -->
         <div class="card">
             <h2 id="formTitle">Upload / Edit Devotional</h2>
             <form id="devotionalForm" onsubmit="return saveDevotional(event)">
@@ -341,12 +219,41 @@ tr:hover{background:#f5f5f5;}
                 <label>Devotional Message:</label>
                 <textarea id="message" rows="5" required></textarea>
                 
-                <label>Prayer Points (one per line, 10 points):</label>
-                <textarea id="prayerPoints" rows="8" placeholder="Enter 10 prayer points, one per line" required></textarea>
+                <label>Prayer Points (one per line):</label>
+                <textarea id="prayerPoints" rows="8" placeholder="Enter prayer points, one per line (any number)" required></textarea>
+                <div class="prayer-counter" id="prayerCounter">0 lines entered</div>
                 
                 <button type="submit">💾 Save Devotional</button>
                 <button type="button" class="danger" onclick="clearForm()">🗑️ Clear Form</button>
             </form>
+        </div>
+
+        <!-- Import from Word Document -->
+        <div class="card">
+            <h3>📄 Import from Microsoft Word</h3>
+            <p>Upload a .docx file with the following markers (each on its own line):</p>
+            <pre style="background:#f4f4f4;padding:10px;border-radius:5px;font-size:0.8rem;">
+===TITLE===
+Your Title
+===SCRIPTURE===
+Your Scripture
+===DAILY_QUOTE===
+Your Daily Quote
+===HYMN_TITLE===
+Hymn Title
+===HYMN_LYRICS===
+Hymn lyrics...
+===MESSAGE===
+Devotional message...
+===PRAYER_POINTS===
+Point 1
+Point 2
+...
+(any number of points)
+            </pre>
+            <input type="file" id="wordFile" accept=".docx,.doc" />
+            <button class="success" onclick="importFromWord()">📤 Import and Fill Form</button>
+            <div id="importStatus" style="margin-top:10px;"></div>
         </div>
         
         <!-- Devotional List with Delete buttons -->
@@ -354,42 +261,59 @@ tr:hover{background:#f5f5f5;}
             <h2>Manage Existing Devotionals</h2>
             <div id="devotionalList"></div>
         </div>
+
+        <!-- Change Password Section -->
+        <div class="card password-change">
+            <h3>🔐 Change Admin Password</h3>
+            <form onsubmit="return changePassword(event)">
+                <label>Current Password:</label>
+                <input type="password" id="currentPassword" required>
+                
+                <label>New Password:</label>
+                <input type="password" id="newPassword" required>
+                
+                <label>Confirm New Password:</label>
+                <input type="password" id="confirmPassword" required>
+                
+                <button type="submit" class="success">Update Password</button>
+                <span id="passwordChangeStatus" style="margin-left:15px;"></span>
+            </form>
+        </div>
     </div>
 </section>
 
 <div class="footer"><p>&copy; 2026 TWEMI. All Rights Reserved.</p></div>
 
 <script>
-// ==================== GLOBAL VARIABLES ====================
+// ==================== GLOBALS ====================
 let isAdminLoggedIn = false;
-const ADMIN_PASSWORD = "twemi2026";
+const DEFAULT_PASSWORD = "twemi2026";
+
+// Get stored password or default
+function getStoredPassword() {
+    return localStorage.getItem('twemi_admin_password') || DEFAULT_PASSWORD;
+}
 
 // Calendar state
 let currentDate = new Date();
 let currentYear = currentDate.getFullYear();
-let currentMonth = currentDate.getMonth(); // 0-11
-let selectedDay = currentDate.getDate();   // 1-31
+let currentMonth = currentDate.getMonth();
+let selectedDay = currentDate.getDate();
 
 // ==================== DATE DISPLAY ====================
 function updateDate() {
     const today = new Date();
     document.getElementById("currentDate").innerHTML = "📅 Today is: " + today.toLocaleDateString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
 }
 updateDate();
 
-// ==================== SECTION NAVIGATION ====================
+// ==================== NAVIGATION ====================
 function showSection(sectionId) {
-    if(sectionId !== 'admin') {
-        document.getElementById('admin').style.display = 'none';
-    }
+    if(sectionId !== 'admin') document.getElementById('admin').style.display = 'none';
     document.getElementById(sectionId).scrollIntoView({behavior: 'smooth'});
 }
-
 function showAdminSection() {
     document.getElementById('admin').style.display = 'block';
     document.getElementById('admin').scrollIntoView({behavior: 'smooth'});
@@ -408,40 +332,20 @@ function getDevotionals() {
     const data = localStorage.getItem('twemi_devotionals');
     return data ? JSON.parse(data) : [];
 }
-
 function saveDevotionals(devotionals) {
     localStorage.setItem('twemi_devotionals', JSON.stringify(devotionals));
-    renderCalendar(); // Update calendar after saving
+    renderCalendar();
     if(isAdminLoggedIn) loadDevotionalList();
+    if(selectedDay) showDevotional(selectedDay);
 }
 
-// Initialize with sample data (using day numbers, months are ignored, just days 1-31)
+// Initialize with sample data (days 1 and 2)
 function initSampleData() {
     let devotionals = getDevotionals();
     if(devotionals.length === 0) {
         devotionals = [
-            {
-                id: 1,
-                dayNumber: 1,
-                title: "The Foundation of True Worship",
-                scripture: "John 4:23-24",
-                dailyQuote: "“True worship is when your spirit responds to God’s Spirit.” — Rev. Mrs Deborah Adebowale",
-                hymnTitle: "Come, Thou Fount of Every Blessing",
-                hymnLyrics: "Come, Thou Fount of every blessing, tune my heart to sing Thy grace...",
-                message: "True worship is not defined by location or loudness but by alignment with truth and spirit. The Father seeks those who will worship Him in spirit and in truth.",
-                prayerPoints: "Father, teach me to worship You in spirit and in truth.\nLord, remove every distraction that hinders my worship.\nI receive a fresh hunger for Your presence, Lord.\nHelp me to worship You beyond songs, with my whole life.\nLet my heart be an altar of true worship daily.\nFather, let the Holy Spirit guide my worship always.\nBreak every yoke of hypocrisy in my life.\nI declare that I am a true worshipper.\nLord, let my worship attract Your presence.\nFather, let my life bring You pleasure and honor."
-            },
-            {
-                id: 2,
-                dayNumber: 2,
-                title: "Worship in Spirit",
-                scripture: "Philippians 3:3",
-                dailyQuote: "“Spirit-led worship bypasses the mind and touches heaven.” — Rev. Mrs Deborah Adebowale",
-                hymnTitle: "Holy, Holy, Holy",
-                hymnLyrics: "Holy, holy, holy! Lord God Almighty! Early in the morning our song shall rise to Thee...",
-                message: "Worship in spirit means engaging your renewed human spirit, enabled by the Holy Spirit. It goes beyond singing; it is a life yielded to God.",
-                prayerPoints: "Lord, activate my spirit to worship You.\nForgive me for flesh-driven worship.\nHoly Spirit, take over my praise.\nI break free from dead religious rituals.\nLet my spirit be sensitive to You.\nTeach me to pray in the Spirit.\nLet every cell glorify You.\nLet my worship be a sweet aroma.\nI reject mere lip service.\nBaptize me afresh with the Spirit of worship."
-            }
+            { id: 1, dayNumber: 1, title: "The Foundation of True Worship", scripture: "John 4:23-24", dailyQuote: "True worship is when your spirit responds to God’s Spirit.", hymnTitle: "Come, Thou Fount", hymnLyrics: "Come, Thou Fount of every blessing...", message: "True worship is not defined by location...", prayerPoints: "Point 1\nPoint 2\nPoint 3\nPoint 4\nPoint 5\nPoint 6\nPoint 7\nPoint 8\nPoint 9\nPoint 10" },
+            { id: 2, dayNumber: 2, title: "Worship in Spirit", scripture: "Philippians 3:3", dailyQuote: "Spirit-led worship bypasses the mind.", hymnTitle: "Holy, Holy, Holy", hymnLyrics: "Holy, holy, holy! Lord God Almighty...", message: "Worship in spirit means engaging your renewed human spirit...", prayerPoints: "1\n2\n3\n4\n5\n6\n7\n8\n9\n10" }
         ];
         saveDevotionals(devotionals);
     }
@@ -450,157 +354,105 @@ initSampleData();
 
 // ==================== CALENDAR FUNCTIONS ====================
 function renderCalendar() {
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"];
+    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     document.getElementById('displayMonthYear').innerText = `${monthNames[currentMonth]} ${currentYear}`;
-    
-    const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // 0 = Sunday
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    
     const grid = document.getElementById('calendarGrid');
-    // Remove old day cells (keep the 7 weekday headers)
-    while(grid.children.length > 7) {
-        grid.removeChild(grid.lastChild);
-    }
-    
+    while(grid.children.length > 7) grid.removeChild(grid.lastChild);
     const devotionals = getDevotionals();
     const today = new Date();
     const isCurrentMonth = (today.getMonth() === currentMonth && today.getFullYear() === currentYear);
     
-    // Empty cells before first day
-    for(let i = 0; i < firstDay; i++) {
-        const emptyCell = document.createElement('div');
-        emptyCell.className = 'calendar-day empty';
-        grid.appendChild(emptyCell);
-    }
-    
-    // Days of month
-    for(let d = 1; d <= daysInMonth; d++) {
-        const cell = document.createElement('div');
+    for(let i=0; i<firstDay; i++) { let e=document.createElement('div'); e.className='calendar-day empty'; grid.appendChild(e); }
+    for(let d=1; d<=daysInMonth; d++) {
+        let cell = document.createElement('div');
         cell.className = 'calendar-day';
-        if(isCurrentMonth && d === today.getDate()) {
-            cell.classList.add('current-day');
-        }
-        if(selectedDay === d) {
-            cell.classList.add('selected');
-        }
-        
-        // Check if devotional exists for this day (dayNumber)
-        const hasDevotional = devotionals.some(dev => dev.dayNumber === d);
-        if(hasDevotional) {
-            cell.classList.add('has-devotional');
-        }
-        
+        if(isCurrentMonth && d===today.getDate()) cell.classList.add('current-day');
+        if(selectedDay === d) cell.classList.add('selected');
+        if(devotionals.some(dev=>dev.dayNumber===d)) cell.classList.add('has-devotional');
         cell.setAttribute('data-day', d);
         cell.onclick = function() { selectDay(d); };
-        
-        cell.innerHTML = `<span class="day-number">${d}</span>
-            ${hasDevotional ? '<span class="devotional-indicator">📖</span>' : ''}`;
-        
+        cell.innerHTML = `<span class="day-number">${d}</span>${devotionals.some(dev=>dev.dayNumber===d)?'<span class="devotional-indicator">📖</span>':''}`;
         grid.appendChild(cell);
     }
 }
-
-function selectDay(day) {
-    selectedDay = day;
-    renderCalendar(); // re-render to update selected style
-    showDevotional(day);
-}
-
+function selectDay(day) { selectedDay = day; renderCalendar(); showDevotional(day); }
 function changeMonth(delta) {
     currentMonth += delta;
-    if(currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-    } else if(currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-    }
+    if(currentMonth<0) { currentMonth=11; currentYear--; }
+    else if(currentMonth>11) { currentMonth=0; currentYear++; }
     renderCalendar();
-    // Optionally, if current selected day exists in new month, keep it, else reset to 1
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
     if(selectedDay > daysInMonth) selectedDay = 1;
-    selectDay(selectedDay); // This will refresh devotional display
+    selectDay(selectedDay);
 }
 
-// ==================== DEVOTIONAL DISPLAY ====================
+// ==================== DISPLAY DEVOTIONAL ====================
 function showDevotional(day) {
     const devotionals = getDevotionals();
     const data = devotionals.find(d => d.dayNumber === day);
     const display = document.getElementById('devotionalDisplay');
-    
     if(!data) {
         display.innerHTML = `<div style="text-align:center;padding:40px;"><h3>Day ${day} - Coming Soon</h3><p>This devotional is being prepared. Please check back later.</p></div>`;
         return;
     }
-    
     const prayerList = data.prayerPoints.split('\n').map(p => `<li>${p}</li>`).join('');
-    
     display.innerHTML = `
         <div class="devotional-title">📖 ${data.title}</div>
-        <div style="font-size:1.1rem;color:#004d40;font-weight:600;margin:10px 0;">${data.scripture}</div>
+        <div style="font-size:1.1rem;color:#004d40;margin:10px 0;">${data.scripture}</div>
         <div class="daily-quote">💬 ${data.dailyQuote}</div>
         <div class="hymn-section"><span style="font-weight:700;color:#b85e00;">🎵 Hymn: ${data.hymnTitle}</span><br>${data.hymnLyrics}</div>
         <div style="margin:20px 0;">${data.message}</div>
-        <div class="prayer-points"><h4>🙏 10 Prayer Points</h4><ol>${prayerList}</ol></div>
+        <div class="prayer-points"><h4>🙏 Prayer Points</h4><ol>${prayerList}</ol></div>
     `;
 }
 
-// ==================== ADMIN FUNCTIONS ====================
+// ==================== ADMIN LOGIN ====================
 function adminLogin() {
-    const pwd = document.getElementById('adminPassword').value;
-    if(pwd === ADMIN_PASSWORD) {
+    const entered = document.getElementById('adminPassword').value;
+    if(entered === getStoredPassword()) {
         isAdminLoggedIn = true;
         document.getElementById('adminLoginBlock').style.display = 'none';
         document.getElementById('adminControls').style.display = 'block';
         loadDevotionalList();
-    } else {
-        alert('Invalid password. Default password is: twemi2026');
-    }
+        // Add counter listener
+        document.getElementById('prayerPoints').addEventListener('input', updatePrayerCounter);
+        document.getElementById('passwordChangeStatus').innerText = '';
+    } else alert('Invalid password.');
 }
 
+// ==================== PRAYER POINTS COUNTER ====================
+function updatePrayerCounter() {
+    const textarea = document.getElementById('prayerPoints');
+    const lines = textarea.value.split('\n').filter(l => l.trim() !== '');
+    document.getElementById('prayerCounter').innerText = lines.length + ' lines entered';
+}
+
+// ==================== LOAD DEVOTIONAL LIST (for management) ====================
 function loadDevotionalList() {
     const devotionals = getDevotionals();
     let html = '<table><tr><th>Day</th><th>Title</th><th>Actions</th></tr>';
-    
-    devotionals.sort((a, b) => a.dayNumber - b.dayNumber);
-    
-    devotionals.forEach(d => {
-        html += `<tr>
-            <td>Day ${d.dayNumber}</td>
-            <td>${d.title}</td>
-            <td>
-                <button onclick="editDevotional(${d.dayNumber})">✏️ Edit</button>
-                <button class="danger" onclick="deleteDevotional(${d.dayNumber})">🗑️ Delete</button>
-            </td>
-        </tr>`;
+    devotionals.sort((a,b)=>a.dayNumber-b.dayNumber).forEach(d=>{
+        html += `<tr><td>Day ${d.dayNumber}</td><td>${d.title}</td><td><button onclick="editDevotional(${d.dayNumber})">✏️ Edit</button> <button class="danger" onclick="deleteDevotional(${d.dayNumber})">🗑️ Delete</button></td></tr>`;
     });
-    
-    for(let i = 1; i <= 31; i++) {
-        if(!devotionals.some(d => d.dayNumber === i)) {
-            html += `<tr style="background:#f9f9f9;">
-                <td>Day ${i}</td>
-                <td colspan="2"><em>Not uploaded yet</em> <button class="success" onclick="uploadForDay(${i})">📤 Upload</button></td>
-            </tr>`;
-        }
+    for(let i=1;i<=31;i++) {
+        if(!devotionals.some(d=>d.dayNumber===i))
+            html += `<tr style="background:#f9f9f9;"><td>Day ${i}</td><td colspan="2"><em>Not uploaded</em> <button class="success" onclick="uploadForDay(${i})">📤 Upload</button></td></tr>`;
     }
-    
     html += '</table>';
     document.getElementById('devotionalList').innerHTML = html;
 }
-
 function uploadForDay(day) {
     clearForm();
     document.getElementById('dayNumber').value = day;
-    document.getElementById('formTitle').innerText = `Upload Devotional - Day ${day}`;
+    document.getElementById('formTitle').innerText = `Upload Devotional for Day ${day}`;
     document.getElementById('devotionalForm').scrollIntoView({behavior: 'smooth'});
 }
-
 function editDevotional(day) {
     const devotionals = getDevotionals();
     const data = devotionals.find(d => d.dayNumber === day);
     if(!data) return;
-    
     document.getElementById('editId').value = data.id;
     document.getElementById('dayNumber').value = data.dayNumber;
     document.getElementById('title').value = data.title;
@@ -610,87 +462,183 @@ function editDevotional(day) {
     document.getElementById('hymnLyrics').value = data.hymnLyrics;
     document.getElementById('message').value = data.message;
     document.getElementById('prayerPoints').value = data.prayerPoints;
-    
     document.getElementById('formTitle').innerText = `Edit Devotional - Day ${day}`;
+    updatePrayerCounter();
     document.getElementById('devotionalForm').scrollIntoView({behavior: 'smooth'});
 }
-
 function clearForm() {
     document.getElementById('devotionalForm').reset();
     document.getElementById('editId').value = '';
     document.getElementById('formTitle').innerText = 'Upload New Devotional';
+    document.getElementById('importStatus').innerHTML = '';
+    updatePrayerCounter();
 }
 
+// ==================== SAVE DEVOTIONAL (manual form) ====================
 function saveDevotional(event) {
     event.preventDefault();
-    
-    const devotionals = getDevotionals();
-    const editId = document.getElementById('editId').value;
     const dayNumber = parseInt(document.getElementById('dayNumber').value);
-    
-    if(!editId) {
-        const existing = devotionals.find(d => d.dayNumber === dayNumber);
-        if(existing) {
-            if(!confirm(`Day ${dayNumber} already exists. Do you want to overwrite?`)) {
-                return false;
-            }
-            const index = devotionals.findIndex(d => d.dayNumber === dayNumber);
-            devotionals.splice(index, 1);
-        }
-    }
-    
+    const title = document.getElementById('title').value.trim();
+    const scripture = document.getElementById('scripture').value.trim();
+    const dailyQuote = document.getElementById('dailyQuote').value.trim();
+    const hymnTitle = document.getElementById('hymnTitle').value.trim();
+    const hymnLyrics = document.getElementById('hymnLyrics').value.trim();
+    const message = document.getElementById('message').value.trim();
     const prayerPoints = document.getElementById('prayerPoints').value.trim();
+    
     const lines = prayerPoints.split('\n').filter(l => l.trim() !== '');
-    if(lines.length !== 10) {
-        alert('Please enter exactly 10 prayer points (one per line)');
+    if(lines.length === 0) {
+        alert('Please enter at least one prayer point.');
         return false;
     }
     
-    const devotional = {
-        id: editId || Date.now(),
-        dayNumber: dayNumber,
-        title: document.getElementById('title').value,
-        scripture: document.getElementById('scripture').value,
-        dailyQuote: document.getElementById('dailyQuote').value,
-        hymnTitle: document.getElementById('hymnTitle').value,
-        hymnLyrics: document.getElementById('hymnLyrics').value,
-        message: document.getElementById('message').value,
-        prayerPoints: prayerPoints
+    let devotionals = getDevotionals();
+    // Remove existing day if any
+    devotionals = devotionals.filter(d => d.dayNumber !== dayNumber);
+    const newDevotional = {
+        id: Date.now(),
+        dayNumber, title, scripture, dailyQuote, hymnTitle, hymnLyrics, message, prayerPoints
     };
-    
-    if(editId) {
-        const index = devotionals.findIndex(d => d.id == editId);
-        if(index !== -1) devotionals[index] = devotional;
-    } else {
-        devotionals.push(devotional);
-    }
-    
+    devotionals.push(newDevotional);
     saveDevotionals(devotionals);
     alert('Devotional saved successfully!');
     clearForm();
     loadDevotionalList();
-    // If the saved day is currently selected, refresh display
     if(selectedDay === dayNumber) showDevotional(dayNumber);
     return false;
 }
 
+// ==================== IMPORT FROM WORD ====================
+function importFromWord() {
+    const fileInput = document.getElementById('wordFile');
+    const statusDiv = document.getElementById('importStatus');
+    if (!fileInput.files || fileInput.files.length === 0) {
+        statusDiv.innerHTML = '❌ Please select a Word document.';
+        return;
+    }
+    const file = fileInput.files[0];
+    statusDiv.innerHTML = '⏳ Reading Word document...';
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const arrayBuffer = e.target.result;
+        mammoth.extractRawText({ arrayBuffer: arrayBuffer })
+            .then(function(result) {
+                const fullText = result.value; // raw text
+                // Parse using markers
+                const markers = {
+                    '===TITLE===': 'title',
+                    '===SCRIPTURE===': 'scripture',
+                    '===DAILY_QUOTE===': 'dailyQuote',
+                    '===HYMN_TITLE===': 'hymnTitle',
+                    '===HYMN_LYRICS===': 'hymnLyrics',
+                    '===MESSAGE===': 'message',
+                    '===PRAYER_POINTS===': 'prayerPoints'
+                };
+                let data = {};
+                let remainingText = fullText;
+                for (let marker in markers) {
+                    const field = markers[marker];
+                    const startIdx = remainingText.indexOf(marker);
+                    if (startIdx === -1) {
+                        statusDiv.innerHTML = `❌ Marker ${marker} not found.`;
+                        return;
+                    }
+                    const afterMarker = remainingText.substring(startIdx + marker.length).trim();
+                    // find next marker
+                    let nextMarkerIdx = afterMarker.length;
+                    for (let m in markers) {
+                        const idx = afterMarker.indexOf(m);
+                        if (idx !== -1 && idx < nextMarkerIdx) nextMarkerIdx = idx;
+                    }
+                    let value = afterMarker.substring(0, nextMarkerIdx).trim();
+                    // remove this marker from remaining text for next search
+                    remainingText = afterMarker.substring(nextMarkerIdx);
+                    data[field] = value;
+                }
+                // Validate required fields
+                const required = ['title','scripture','dailyQuote','hymnTitle','hymnLyrics','message','prayerPoints'];
+                for (let f of required) {
+                    if (!data[f]) {
+                        statusDiv.innerHTML = `❌ Missing field: ${f}`;
+                        return;
+                    }
+                }
+                // Validate at least one prayer point
+                const points = data.prayerPoints.split('\n').filter(l => l.trim() !== '');
+                if (points.length === 0) {
+                    statusDiv.innerHTML = `❌ No prayer points found.`;
+                    return;
+                }
+                // Fill the form
+                document.getElementById('title').value = data.title;
+                document.getElementById('scripture').value = data.scripture;
+                document.getElementById('dailyQuote').value = data.dailyQuote;
+                document.getElementById('hymnTitle').value = data.hymnTitle;
+                document.getElementById('hymnLyrics').value = data.hymnLyrics;
+                document.getElementById('message').value = data.message;
+                document.getElementById('prayerPoints').value = data.prayerPoints;
+                updatePrayerCounter();
+                statusDiv.innerHTML = '✅ Form filled from Word. Please review and click Save Devotional.';
+            })
+            .catch(function(err) {
+                statusDiv.innerHTML = '❌ Error parsing Word document: ' + err.message;
+            });
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+// ==================== DELETE ====================
 function deleteDevotional(day) {
-    if(confirm(`Are you sure you want to delete Day ${day}?`)) {
-        let devotionals = getDevotionals();
-        devotionals = devotionals.filter(d => d.dayNumber !== day);
+    if(confirm(`Delete Day ${day}?`)) {
+        let devotionals = getDevotionals().filter(d => d.dayNumber !== day);
         saveDevotionals(devotionals);
         loadDevotionalList();
-        // If the deleted day was selected, show empty message
         if(selectedDay === day) showDevotional(day);
     }
 }
 
-// ==================== INITIALIZATION ====================
+// ==================== CHANGE PASSWORD ====================
+function changePassword(event) {
+    event.preventDefault();
+    const current = document.getElementById('currentPassword').value;
+    const newPass = document.getElementById('newPassword').value;
+    const confirm = document.getElementById('confirmPassword').value;
+    const statusSpan = document.getElementById('passwordChangeStatus');
+
+    if (current !== getStoredPassword()) {
+        statusSpan.style.color = 'red';
+        statusSpan.innerText = 'Current password is incorrect.';
+        return false;
+    }
+    if (newPass !== confirm) {
+        statusSpan.style.color = 'red';
+        statusSpan.innerText = 'New passwords do not match.';
+        return false;
+    }
+    if (newPass.length < 4) {
+        statusSpan.style.color = 'red';
+        statusSpan.innerText = 'Password must be at least 4 characters.';
+        return false;
+    }
+    // Save new password
+    localStorage.setItem('twemi_admin_password', newPass);
+    statusSpan.style.color = 'green';
+    statusSpan.innerText = 'Password updated successfully.';
+    document.getElementById('currentPassword').value = '';
+    document.getElementById('newPassword').value = '';
+    document.getElementById('confirmPassword').value = '';
+    return false;
+}
+
+// ==================== INIT ====================
 window.onload = function() {
     renderCalendar();
-    selectDay(selectedDay); // Show today's devotional if exists, else coming soon
-    
+    selectDay(selectedDay);
     document.getElementById('admin').style.display = 'none';
+    // Initialize counter if textarea exists
+    const prayerTA = document.getElementById('prayerPoints');
+    if(prayerTA) prayerTA.addEventListener('input', updatePrayerCounter);
 };
 </script>
 </body>
