@@ -1,645 +1,798 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TWEMI - True Worshippers Evangelical Ministries International</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<!-- Mammoth.js for Word document parsing -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
-<style>
-/* ... (styles unchanged, same as previous) ... */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#f4f6f9;color:#333;}
-header{background:linear-gradient(to right,#001f3f,#003366);color:white;padding:20px;text-align:center;}
-nav{background:#00264d;display:flex;justify-content:center;flex-wrap:wrap;position:sticky;top:0;z-index:100;}
-nav a{color:white;padding:14px 18px;text-decoration:none;font-size:14px;cursor:pointer;}
-nav a:hover{background:#004080;}
-.admin-link{background:#ffaa00;color:#000;font-weight:bold;}
-.admin-link:hover{background:#ffcc00;}
-.ticker{background:#ffcc00;color:#000;padding:10px;font-weight:600;}
-.hero{background:url('https://images.unsplash.com/photo-1507692049790-de58290a4334') center/cover;color:white;text-align:center;padding:120px 20px;}
-section{padding:40px 20px;max-width:1200px;margin:auto;}
-section h2{text-align:center;margin-bottom:25px;color:#00264d;}
-.card{background:white;padding:25px;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,0.1);margin-bottom:20px;}
-input,textarea,select{width:100%;padding:12px;margin:8px 0;border-radius:5px;border:1px solid #ccc;font-size:14px;}
-button{background:#003366;color:white;padding:12px 25px;border:none;border-radius:5px;cursor:pointer;margin:5px;font-size:14px;}
-button:hover{background:#004080;}
-button.danger{background:#dc3545;}
-button.danger:hover{background:#bb2d3b;}
-button.success{background:#28a745;}
-button.success:hover{background:#218838;}
-.footer{background:#001f3f;color:white;padding:30px;margin-top:40px;text-align:center;}
-table{width:100%;border-collapse:collapse;margin-top:20px;}
-th,td{padding:12px;text-align:left;border-bottom:1px solid #ddd;}
-th{background:#003366;color:white;}
-tr:hover{background:#f5f5f5;}
-.login-form{max-width:400px;margin:50px auto;}
-.devotional-content{background:#f9faff;border-left:5px solid #ffaa00;padding:25px;border-radius:12px;margin-top:20px;}
-.devotional-title{font-size:1.8rem;color:#00264d;border-bottom:2px solid #ffaa00;padding-bottom:8px;}
-.daily-quote{background:#f0f7e8;padding:15px;border-radius:8px;margin:15px 0;border-left:4px solid #2e7d32;}
-.hymn-section{background:#fff4e5;padding:15px;border-radius:8px;margin:15px 0;}
-.prayer-points{background:#e8f0fe;padding:15px 25px;border-radius:12px;}
-.prayer-points li{margin-bottom:8px;}
-#admin{scroll-margin-top:60px;}
-.pastor-grid {
-    display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; margin-top: 20px;
-}
-.pastor-card {
-    background: white; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    padding: 20px; max-width: 300px; text-align: center;
-}
-.pastor-img {
-    width: 100%; height: 250px; object-fit: cover; border-radius: 50%;
-    border: 4px solid #ffaa00; margin-bottom: 15px;
-}
-.pastor-card h3 { color: #00264d; }
-.audio-player {
-    background: #eef5ff; border-radius: 50px; padding: 15px 25px; margin: 20px 0;
-    display: flex; align-items: center; flex-wrap: wrap; gap: 15px; border-left: 6px solid #003366;
-}
-.audio-player audio { flex: 1; min-width: 250px; }
-.audio-label {
-    font-weight: 600; color: #00264d; background: #ffaa00;
-    padding: 6px 15px; border-radius: 30px; font-size: 0.9rem;
-}
-#adminPassword { margin-bottom: 15px; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>True Worshippers · Evangelical Ministries</title>
+  <!-- Google Fonts & Font Awesome 6 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- CSS Reset & Variables ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* Calendar Styles */
-.calendar-nav {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 20px; flex-wrap: wrap; gap: 15px;
-}
-.month-year { font-size: 1.8rem; font-weight: 600; color: #00264d; }
-.calendar-grid {
-    display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
-    background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.weekday { text-align: center; font-weight: 600; color: #003366; padding: 8px; background: #e6edf5; border-radius: 6px; }
-.calendar-day {
-    aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: #f9f9f9; border-radius: 8px; cursor: pointer; font-weight: 500; transition: all 0.2s;
-    border: 2px solid transparent; padding: 5px;
-}
-.calendar-day:hover { background: #ffaa00; color: #000; transform: scale(1.02); }
-.calendar-day.selected { border-color: #003366; background: #cce4ff; font-weight: 600; }
-.calendar-day.has-devotional { background: #d4edda; color: #155724; border-color: #28a745; }
-.calendar-day.empty { background: transparent; cursor: default; border: none; }
-.day-number { font-size: 1.1rem; }
-.devotional-indicator { font-size: 0.8rem; margin-top: 2px; }
-.current-day { background: #ffaa00 !important; color: #000; font-weight: bold; }
+    :root {
+      --primary-dark: #5b4b3a;
+      --primary: #8b6f4c;
+      --primary-light: #b99e7c;
+      --accent-gold: #c9a87c;
+      --accent-olive: #7f9a7a;
+      --accent-terra: #b75f4a;
+      --bg-light: #fbf7f2;
+      --bg-card: #ffffff;
+      --text-dark: #2e2a27;
+      --text-muted: #5f554b;
+      --shadow-sm: 0 10px 30px -15px rgba(0,0,0,0.15);
+      --shadow-hover: 0 20px 35px -15px rgba(90,60,40,0.25);
+      --border-light: 1px solid rgba(160, 130, 100, 0.15);
+      --radius-card: 2rem;
+      --radius-btn: 3rem;
+    }
 
-/* File upload info */
-.file-info {
-    background: #e8f4fd; padding: 8px; border-radius: 5px; font-size: 0.9rem;
-    word-break: break-all; border-left: 4px solid #28a745; margin: 10px 0;
-}
-/* Prayer points counter */
-.prayer-counter {
-    font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px; color: #555;
-}
-/* Password change form */
-.password-change {
-    margin-top: 30px;
-    border-top: 2px solid #ccc;
-    padding-top: 20px;
-}
-</style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ----- responsive navbar with dropdown ----- */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(251, 247, 242, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: var(--border-light);
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      background: linear-gradient(135deg, var(--primary), var(--accent-terra));
+      color: white;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .logo-text h2 {
+      font-size: 1.5rem;
+      color: var(--primary-dark);
+      text-transform: uppercase;
+    }
+
+    .logo-text span {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      display: block;
+      line-height: 1.2;
+      text-transform: none;
+    }
+
+    /* desktop navigation */
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-size: 1rem;
+      transition: 0.2s;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+      border-bottom-color: var(--accent-gold);
+    }
+
+    /* dropdown menu for mobile */
+    .dropdown-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+      cursor: pointer;
+    }
+
+    .dropdown-menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background: rgba(251, 247, 242, 0.98);
+      backdrop-filter: blur(12px);
+      padding: 1rem 0;
+      border-radius: 0 0 2rem 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .dropdown-menu a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-size: 1.1rem;
+      padding: 0.8rem 2rem;
+      transition: 0.2s;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .dropdown-menu a:hover {
+      background: var(--accent-gold);
+      color: #2b241f;
+    }
+
+    @media (max-width: 700px) {
+      .nav-links {
+        display: none;
+      }
+      .dropdown-toggle {
+        display: block;
+      }
+      .dropdown-menu.show {
+        display: flex;
+      }
+    }
+
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.7rem 2rem;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary-dark);
+      box-shadow: none;
+    }
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* ----- Hero Section ----- */
+    .hero {
+      background: linear-gradient(120deg, #f0e7dc, #e5d6c6);
+      padding: 4rem 0 6rem;
+      position: relative;
+      isolation: isolate;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cGF0aCBkPSJNMjAgM0wzIDIwaDE3VjN6IiBmaWxsPSIjZmZmfTIgb3BhY2l0eT0iMC4wMyIvPjwvc3ZnPg==');
+      opacity: 0.2;
+      z-index: -1;
+    }
+
+    .hero .container {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .hero-text {
+      flex: 1 1 400px;
+    }
+
+    .hero-text h1 {
+      font-size: 3.8rem;
+      font-weight: 700;
+      color: #2b241f;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      text-transform: none;
+    }
+
+    .hero-highlight {
+      display: inline-block;
+      background: var(--primary-light);
+      color: #2b241f;
+      padding: 0.3rem 1.5rem;
+      border-radius: 60px;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(4px);
+      padding: 0.7rem 1.5rem;
+      border-radius: 60px;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .hero-image {
+      flex: 0 0 280px;
+      background: white;
+      border-radius: 40% 40% 20% 20%;
+      padding: 2rem 1.5rem 1.5rem;
+      box-shadow: 25px 25px 0 rgba(150, 120, 90, 0.2);
+      text-align: center;
+      border: 3px solid white;
+    }
+    .hero-image i { font-size: 7rem; color: var(--primary-light); }
+
+    /* ----- global sections ----- */
+    section {
+      padding: 5rem 0;
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+      color: var(--primary-dark);
+      text-align: center;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .section-subhead {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 3.5rem;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      text-transform: none;
+    }
+
+    /* about card */
+    .about-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      padding: 3rem;
+      box-shadow: var(--shadow-sm);
+      border: var(--border-light);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Vision cards */
+    .vision-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .vision-card {
+      background: var(--bg-card);
+      padding: 2.5rem 1.8rem;
+      border-radius: var(--radius-card);
+      text-align: left;
+      border: var(--border-light);
+      transition: 0.3s;
+      box-shadow: var(--shadow-sm);
+    }
+    .vision-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-gold);
+    }
+    .vision-card i {
+      font-size: 2.8rem;
+      color: var(--accent-terra);
+      margin-bottom: 1.2rem;
+    }
+    .vision-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--primary-dark);
+    }
+    .vision-card .scripture {
+      margin-top: 1.2rem;
+      font-style: italic;
+      color: var(--primary);
+      border-left: 4px solid var(--accent-gold);
+      padding-left: 1rem;
+      font-size: 0.95rem;
+    }
+
+    /* devotional main (static) */
+    .devotional-main {
+      background: white;
+      border-radius: var(--radius-card);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .devotional-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .devotional-date {
+      background: var(--accent-gold);
+      color: #2b241f;
+      padding: 0.5rem 2.2rem;
+      border-radius: 60px;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    .devotional-title {
+      font-size: 3.2rem;
+      margin: 1rem 0 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .devotional-authors {
+      font-size: 1.4rem;
+      color: var(--primary);
+      font-style: italic;
+      border-bottom: 2px dashed var(--accent-gold);
+      padding-bottom: 1.5rem;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 2rem 0 3rem;
+    }
+    .action-btn {
+      border: none;
+      padding: 0.9rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: white;
+      transition: 0.2s;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    .action-btn.share { background: var(--accent-olive); }
+    .action-btn.print { background: var(--primary-light); color: #2e2a27; }
+    .action-btn.like { background: var(--accent-terra); }
+    .action-btn.listen { background: var(--accent-gold); color: #2b241f; }
+    .action-btn:hover { transform: translateY(-3px); filter: brightness(1.05); }
+
+    .daily-quote-card {
+      background: #f9f1e8;
+      border-left: 10px solid var(--accent-terra);
+      padding: 2.5rem;
+      border-radius: 2rem 1rem 2rem 1rem;
+      font-size: 1.4rem;
+      font-style: italic;
+      margin: 2.5rem 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .bible-passage {
+      background: #e7ddd2;
+      padding: 2.5rem;
+      border-radius: 2rem;
+      margin: 3rem 0;
+    }
+    .bible-passage h4 { font-size: 1.8rem; color: var(--primary-dark); }
+
+    .prayer-points {
+      background: #f2eae2;
+      padding: 3rem;
+      border-radius: 3rem 2rem 3rem 2rem;
+      margin: 3rem 0;
+    }
+    .prayer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+    .prayer-item {
+      background: white;
+      padding: 1.2rem 1.8rem;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.03);
+    }
+    .prayer-item i { color: var(--accent-olive); font-size: 1.2rem; }
+
+    .encouragement-box {
+      background: linear-gradient(135deg, #f9efe6, #f2dfd0);
+      padding: 3rem;
+      border-radius: 3rem 1.5rem 3rem 1.5rem;
+      border: 2px solid white;
+      margin-top: 3rem;
+    }
+
+    .founders-bar {
+      background: #fff6ef;
+      padding: 1.8rem 0;
+      border-top: 1px solid #ebd9cb;
+      border-bottom: 1px solid #ebd9cb;
+    }
+    .founders-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .founder-tag {
+      background: white;
+      padding: 0.5rem 1.8rem;
+      border-radius: 60px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .contact-card {
+      background: white;
+      padding: 2.5rem;
+      border-radius: var(--radius-card);
+      border: var(--border-light);
+    }
+    .contact-social a {
+      color: var(--primary);
+      font-size: 2rem;
+      margin-right: 1.5rem;
+      transition: 0.2s;
+    }
+    .contact-social a:hover { color: var(--accent-terra); }
+
+    .contact-form {
+      background: white;
+      padding: 3rem;
+      border-radius: var(--radius-card);
+      border: var(--border-light);
+      max-width: 700px;
+      margin: 2rem auto 0;
+    }
+    .contact-form label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--primary-dark);
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 1px solid #d4c5b6;
+      border-radius: 60px;
+      font-family: 'Inter', sans-serif;
+      margin-bottom: 1.5rem;
+      background: #fefcf9;
+    }
+    .contact-form textarea {
+      border-radius: 2rem;
+      resize: vertical;
+    }
+    .contact-form button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .contact-form button:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .footer {
+      background: #2e2823;
+      color: #ddd2c7;
+      padding: 3rem 0;
+      text-align: center;
+    }
+    .footer .footer-logo { font-size: 2.5rem; color: white; }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--primary);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      opacity: 0.7;
+      transition: 0.2s;
+      z-index: 99;
+    }
+    .back-to-top:hover { opacity: 1; background: var(--primary-dark); }
+  </style>
 </head>
 <body>
-
-<header>
-<h1>TRUE WORSHIPPERS EVANGELICAL MINISTRIES INTERNATIONAL</h1>
-<p>Founded 2020 | By Apostle Solomon S. Adebowale & Rev. Mrs Deborah Funmilayo Adebowale</p>
-<p id="currentDate"></p>
-</header>
-
-<nav>
-<a href="#home" onclick="showSection('home')">Home</a>
-<a href="#about" onclick="showSection('about')">About</a>
-<a href="#pastor" onclick="showSection('pastor')">Our Pastor</a>
-<a href="#services" onclick="showSection('services')">Services</a>
-<a href="#devotional" onclick="showSection('devotional')">Devotional</a>
-<a href="#live" onclick="showSection('live')">Live Stream</a>
-<a href="#gallery" onclick="showSection('gallery')">Gallery</a>
-<a href="#give" onclick="showSection('give')">Give</a>
-<a href="#contact" onclick="showSection('contact')">Contact</a>
-<a href="#admin" onclick="showAdminSection()" class="admin-link">Admin</a>
-</nav>
-
-<div class="ticker"><marquee scrollamount="6">🔥 Welcome to TWEMI | Sunday 9AM | Wednesday 5PM | Daily Devotionals | Join Our Telegram Channel | Call: 08034212065</marquee></div>
-
-<!-- HOME SECTION -->
-<section id="home" class="hero">
-<h2>Welcome to TWEMI</h2>
-<p>Raising True Worshippers | Transforming Lives | Impacting Nations</p>
-<div class="audio-player">
-    <span class="audio-label">🎧 Listen: Sunday Sermon</span>
-    <audio controls controlsList="nodownload">
-        <source src="https://www.dropbox.com/scl/fi/qhr92ephi5ssqnmwx4tj0/Lawrence_Oyor_Godswill_Oyor_-_Hallelujah_Spontaneous_Cover__CeeNaija.com_.mp3?rlkey=fgdeu92okpmxedmb4gtg5n7zh&st=8x0d27bl&dl=1" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <small style="color:#003366;">"The Power of True Worship"</small>
-</div>
-</section>
-
-<!-- ABOUT SECTION -->
-<section id="about"><h2>About Us</h2><div class="card"><p>TWEMI was established in 2020 to raise true worshippers who worship God in Spirit and Truth, preach the undiluted Word and build kingdom leaders globally.</p></div></section>
-
-<!-- PASTOR SECTION -->
-<section id="pastor">
-<h2>Our Pastors</h2>
-<div class="pastor-grid">
-    <div class="pastor-card"><img class="pastor-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f4d?w=400&h=400&fit=crop" alt="Apostle"><h3>Apostle Solomon S. Adebowale</h3><p>Founder and Lead Apostle</p></div>
-    <div class="pastor-card"><img class="pastor-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop" alt="Rev. Mrs"><h3>Rev. Mrs Deborah Funmilayo Adebowale</h3><p>Co-Founder, Author of Sequences of God</p></div>
-</div>
-</section>
-
-<!-- SERVICES SECTION -->
-<section id="services"><h2>Church Services</h2><div class="card"><p><strong>Sunday Worship:</strong> 9:00 AM</p><p><strong>Midweek Service:</strong> Wednesday 5:00 PM</p><p><strong>Prayer Night:</strong> Friday 10:00 PM</p></div></section>
-
-<!-- DEVOTIONAL SECTION with CALENDAR -->
-<section id="devotional">
-    <h2>📖 Daily Devotional – Sequences of God</h2>
-    <div class="card">
-        <div class="calendar-nav">
-            <button onclick="changeMonth(-1)">◀ Prev</button>
-            <span class="month-year" id="displayMonthYear">March 2026</span>
-            <button onclick="changeMonth(1)">Next ▶</button>
-        </div>
-        <div class="calendar-grid" id="calendarGrid">
-            <div class="weekday">Sun</div><div class="weekday">Mon</div><div class="weekday">Tue</div><div class="weekday">Wed</div><div class="weekday">Thu</div><div class="weekday">Fri</div><div class="weekday">Sat</div>
-        </div>
-        <div id="devotionalDisplay" class="devotional-content" style="margin-top:25px;">
-            <p>Select a date from the calendar to view the devotional.</p>
-        </div>
+  <!-- Sticky Nav with Dropdown -->
+  <nav class="navbar">
+    <div class="logo-area">
+      <div class="logo-icon"><i class="fas fa-dove"></i></div>
+      <div class="logo-text">
+        <h2>True Worshippers</h2>
+        <span>Evangelical Ministries Int'l</span>
+      </div>
     </div>
-</section>
-
-<!-- LIVE, GALLERY, GIVE, CONTACT sections (kept minimal) -->
-<section id="live"><h2>Live Streaming</h2><div class="card"><iframe src="https://www.youtube.com/embed/live_stream?channel=UC_x5XG1OV2P6uZZ5FSM9Ttw" allowfullscreen style="width:100%;height:400px;border-radius:8px;"></iframe></div></section>
-<section id="gallery"><h2>Church Gallery</h2><div class="gallery" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;"><img src="https://images.unsplash.com/photo-1515169067868-5387ec356754" style="width:100%;height:200px;object-fit:cover;border-radius:8px;"><img src="https://images.unsplash.com/photo-1507692049790-de58290a4334" style="width:100%;height:200px;object-fit:cover;border-radius:8px;"><img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2" style="width:100%;height:200px;object-fit:cover;border-radius:8px;"></div></section>
-<section id="give"><h2>Online Giving</h2><div class="card"><a href="https://paystack.com/pay/YOURPAYSTACKLINK" target="_blank" style="display:inline-block;padding:10px 20px;background:#28a745;color:white;text-decoration:none;border-radius:5px;">Give via Paystack</a></div></section>
-<section id="contact"><h2>Contact Us</h2><div class="card"><p><strong>Phone:</strong> 08034212065</p><p><strong>Email:</strong> adequatenetwork@gmail.com</p><a href="https://t.me/Twemintchannel" target="_blank" style="display:inline-block;padding:10px 20px;background:#0088cc;color:white;text-decoration:none;border-radius:5px;">Join Our Telegram Channel</a></div></section>
-
-<!-- ADMIN SECTION - Upload from local file or Word + Change Password -->
-<section id="admin" style="display:none;">
-    <h2>Admin Dashboard</h2>
-    <div class="card login-form" id="adminLoginBlock">
-        <h2>Admin Login</h2>
-        <input type="password" id="adminPassword" placeholder="Enter Admin Password">
-        <button onclick="adminLogin()">Login</button>
-        <p style="margin-top:10px;color:#666;">   </div>
-    
-    <div id="adminControls" style="display:none;">
-        <!-- Devotional Form (manual entry / edit) -->
-        <div class="card">
-            <h2 id="formTitle">Upload / Edit Devotional</h2>
-            <form id="devotionalForm" onsubmit="return saveDevotional(event)">
-                <input type="hidden" id="editId" value="">
-                
-                <label>Day Number (1-31):</label>
-                <input type="number" id="dayNumber" min="1" max="31" required>
-                
-                <label>Title:</label>
-                <input type="text" id="title" required>
-                
-                <label>Scripture:</label>
-                <input type="text" id="scripture" required>
-                
-                <label>Daily Quote:</label>
-                <textarea id="dailyQuote" rows="2" required></textarea>
-                
-                <label>Hymn Title:</label>
-                <input type="text" id="hymnTitle" required>
-                
-                <label>Hymn Lyrics:</label>
-                <textarea id="hymnLyrics" rows="3" required></textarea>
-                
-                <label>Devotional Message:</label>
-                <textarea id="message" rows="5" required></textarea>
-                
-                <label>Prayer Points (one per line):</label>
-                <textarea id="prayerPoints" rows="8" placeholder="Enter prayer points, one per line (any number)" required></textarea>
-                <div class="prayer-counter" id="prayerCounter">0 lines entered</div>
-                
-                <button type="submit">💾 Save Devotional</button>
-                <button type="button" class="danger" onclick="clearForm()">🗑️ Clear Form</button>
-            </form>
-        </div>
-
-        <!-- Import from Word Document -->
-        <div class="card">
-            <h3>📄 Import from Microsoft Word</h3>
-            <p>Upload a .docx file with the following markers (each on its own line):</p>
-            <pre style="background:#f4f4f4;padding:10px;border-radius:5px;font-size:0.8rem;">
-===TITLE===
-Your Title
-===SCRIPTURE===
-Your Scripture
-===DAILY_QUOTE===
-Your Daily Quote
-===HYMN_TITLE===
-Hymn Title
-===HYMN_LYRICS===
-Hymn lyrics...
-===MESSAGE===
-Devotional message...
-===PRAYER_POINTS===
-Point 1
-Point 2
-...
-(any number of points)
-            </pre>
-            <input type="file" id="wordFile" accept=".docx,.doc" />
-            <button class="success" onclick="importFromWord()">📤 Import and Fill Form</button>
-            <div id="importStatus" style="margin-top:10px;"></div>
-        </div>
-        
-        <!-- Devotional List with Delete buttons -->
-        <div class="card">
-            <h2>Manage Existing Devotionals</h2>
-            <div id="devotionalList"></div>
-        </div>
-
-        <!-- Change Password Section -->
-        <div class="card password-change">
-            <h3>🔐 Change Admin Password</h3>
-            <form onsubmit="return changePassword(event)">
-                <label>Current Password:</label>
-                <input type="password" id="currentPassword" required>
-                
-                <label>New Password:</label>
-                <input type="password" id="newPassword" required>
-                
-                <label>Confirm New Password:</label>
-                <input type="password" id="confirmPassword" required>
-                
-                <button type="submit" class="success">Update Password</button>
-                <span id="passwordChangeStatus" style="margin-left:15px;"></span>
-            </form>
-        </div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#vision">Vision & Missions</a>
+      <a href="#devotionals">Devotionals</a>
+      <a href="#contact">Contact</a>
     </div>
-</section>
+    <button class="dropdown-toggle" id="dropdownToggle"><i class="fas fa-bars"></i></button>
+    <div class="dropdown-menu" id="dropdownMenu">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#vision">Vision & Missions</a>
+      <a href="#devotionals">Devotionals</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
 
-<div class="footer"><p>&copy; 2026 TWEMI. All Rights Reserved.</p></div>
+  <!-- Hero / Home -->
+  <section id="home" class="hero">
+    <div class="container">
+      <div class="hero-text">
+        <span class="hero-highlight"><i class="fas fa-calendar-alt"></i> Founded 2020</span>
+        <h1>worship in spirit,<br>walk in truth.</h1>
+        <p style="font-size: 1.2rem; max-width: 550px;">A community raised to ignite authentic worship and deepen intimacy with God through the Word.</p>
+        <div class="hero-stats">
+          <div class="stat-item"><i class="fas fa-globe"></i> 8+ nations</div>
+          <div class="stat-item"><i class="fas fa-book-open"></i> Sequences of God</div>
+          <div class="stat-item"><i class="fas fa-heart" style="color: var(--accent-terra);"></i> daily manna</div>
+        </div>
+        <a href="#devotionals" class="btn" style="margin-right: 1rem;">Today's devotional</a>
+        <a href="#about" class="btn btn-outline">Learn more</a>
+      </div>
+      <div class="hero-image">
+        <i class="fas fa-hands-praying"></i>
+        <p>"true worshippers worship the Father in spirit"</p>
+        <small>John 4:23</small>
+      </div>
+    </div>
+  </section>
 
-<script>
-// ==================== GLOBALS ====================
-let isAdminLoggedIn = false;
-const DEFAULT_PASSWORD = "twemi2026";
+  <!-- About Section -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About True Worshippers</h2>
+      <div class="about-card">
+        <p style="font-size: 1.3rem; margin-bottom: 1.5rem;">Founded in 2020 by <strong>Apostle Solomon S. Adebowale</strong> and <strong>Reverend Mrs. Debby Adebowale</strong>, True Worshippers Evangelical Ministries International is a spiritual family dedicated to raising authentic worshipers who encounter God in spirit and truth.</p>
+        <p>We are called to equip believers for the work of ministry, build up the body of Christ, and carry the message of reconciliation to the ends of the earth. Through sound teaching, daily devotionals, and worship, we foster an atmosphere where lives are transformed and identity in Christ is established.</p>
+      </div>
+    </div>
+  </section>
 
-// Get stored password or default
-function getStoredPassword() {
-    return localStorage.getItem('twemi_admin_password') || DEFAULT_PASSWORD;
-}
+  <!-- Vision & Missions -->
+  <section id="vision" style="background: #fcf6f0;">
+    <div class="container">
+      <h2 class="section-title">Vision & Missions</h2>
+      <div class="section-subhead">Our divine mandate and core callings as a ministry</div>
+      <div class="vision-grid">
+        <div class="vision-card">
+          <i class="fas fa-eye"></i>
+          <h3>Vision</h3>
+          <p>To raise a global family of authentic worshipers whose lives reflect the nature of the Father and who impact their world with the Gospel.</p>
+          <div class="scripture">Isaiah 61:3</div>
+        </div>
+        <div class="vision-card">
+          <i class="fas fa-pray"></i>
+          <h3>Worship</h3>
+          <p>Igniting authentic worship through praise, prayer, and the Word, drawing believers into deeper intimacy with God.</p>
+          <div class="scripture">John 4:24</div>
+        </div>
+        <div class="vision-card">
+          <i class="fas fa-seedling"></i>
+          <h3>Discipleship</h3>
+          <p>Establishing every believer in their identity in Christ through systematic teaching and daily devotionals.</p>
+          <div class="scripture">Matthew 28:19-20</div>
+        </div>
+        <div class="vision-card">
+          <i class="fas fa-hand-holding-heart"></i>
+          <h3>Outreach & Missions</h3>
+          <p>Demonstrating God's love through compassion, evangelism, and church planting.</p>
+          <div class="scripture">Acts 1:8</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-// Calendar state
-let currentDate = new Date();
-let currentYear = currentDate.getFullYear();
-let currentMonth = currentDate.getMonth();
-let selectedDay = currentDate.getDate();
+  <!-- STATIC DEVOTIONAL SECTION (5th March 2026 - GREAT GAIN) -->
+  <section id="devotionals" class="devotional-day">
+    <div class="container">
+      <h2 class="section-title">Sequences of God Devotionals</h2>
+      <div class="devotional-main">
+        <div class="devotional-header">
+          <span class="devotional-date"><i class="far fa-calendar-alt"></i> 5th March 2026</span>
+          <h1 class="devotional-title">GREAT GAIN</h1>
+          <div class="devotional-authors">
+            Apostle Segun D. A. & Reverend Mrs. Debby F. A. Solomon
+          </div>
+          <div style="background:#fcf4ec; padding:0.8rem 2rem; border-radius:60px; display:inline-block; margin-top:1rem;">
+            <i class="fas fa-music" style="color:var(--accent-terra);"></i> Hymn: “Take the World, but Give Me Jesus”
+          </div>
+        </div>
 
-// ==================== DATE DISPLAY ====================
-function updateDate() {
-    const today = new Date();
-    document.getElementById("currentDate").innerHTML = "📅 Today is: " + today.toLocaleDateString('en-US', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
-}
-updateDate();
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="action-btn share" id="shareBtn"><i class="fas fa-share-alt"></i> Share</button>
+          <button class="action-btn print" id="printBtn"><i class="fas fa-print"></i> Print</button>
+          <button class="action-btn like" id="likeBtn"><i class="fas fa-heart"></i> Like <span id="likeCount">260</span></button>
+          <button class="action-btn listen" id="listenBtn"><i class="fas fa-headphones"></i> <span id="listenText">Listen</span></button>
+        </div>
 
-// ==================== NAVIGATION ====================
-function showSection(sectionId) {
-    if(sectionId !== 'admin') document.getElementById('admin').style.display = 'none';
-    document.getElementById(sectionId).scrollIntoView({behavior: 'smooth'});
-}
-function showAdminSection() {
-    document.getElementById('admin').style.display = 'block';
-    document.getElementById('admin').scrollIntoView({behavior: 'smooth'});
-    if(!isAdminLoggedIn) {
-        document.getElementById('adminLoginBlock').style.display = 'block';
-        document.getElementById('adminControls').style.display = 'none';
-    } else {
-        document.getElementById('adminLoginBlock').style.display = 'none';
-        document.getElementById('adminControls').style.display = 'block';
-        loadDevotionalList();
-    }
-}
+        <!-- Daily Quote -->
+        <div class="daily-quote-card">
+          <i class="fas fa-quote-left" style="color:var(--accent-terra); margin-right:1rem;"></i>
+          "Godliness with contentment is great gain. For we brought nothing into this world, and it is certain we can carry nothing out."
+        </div>
 
-// ==================== DEVOTIONAL DATA MANAGEMENT ====================
-function getDevotionals() {
-    const data = localStorage.getItem('twemi_devotionals');
-    return data ? JSON.parse(data) : [];
-}
-function saveDevotionals(devotionals) {
-    localStorage.setItem('twemi_devotionals', JSON.stringify(devotionals));
-    renderCalendar();
-    if(isAdminLoggedIn) loadDevotionalList();
-    if(selectedDay) showDevotional(selectedDay);
-}
+        <!-- Bible Passage -->
+        <div class="bible-passage">
+          <h4><i class="fas fa-bible"></i> 1 Timothy 6:6-10 & Philippians 4:11-13 (NKJV)</h4>
+          <div style="background:#fffcf8; padding:1.5rem; border-radius:1.5rem; margin-top:1rem;">
+            <strong>1 Timothy 6:6-8:</strong> “Now godliness with contentment is great gain. For we brought nothing into this world, and it is certain we can carry nothing out. And having food and clothing, with these we shall be content.”<br><br>
+            <strong>Philippians 4:11-13:</strong> “I have learned in whatever state I am, to be content: I know how to be abased, and I know how to abound. Everywhere and in all things I have learned both to be full and to be hungry, both to abound and to suffer need. I can do all things through Christ who strengthens me.”
+          </div>
+        </div>
 
-// Initialize with sample data (days 1 and 2)
-function initSampleData() {
-    let devotionals = getDevotionals();
-    if(devotionals.length === 0) {
-        devotionals = [
-            { id: 1, dayNumber: 1, title: "The Foundation of True Worship", scripture: "John 4:23-24", dailyQuote: "True worship is when your spirit responds to God’s Spirit.", hymnTitle: "Come, Thou Fount", hymnLyrics: "Come, Thou Fount of every blessing...", message: "True worship is not defined by location...", prayerPoints: "Point 1\nPoint 2\nPoint 3\nPoint 4\nPoint 5\nPoint 6\nPoint 7\nPoint 8\nPoint 9\nPoint 10" },
-            { id: 2, dayNumber: 2, title: "Worship in Spirit", scripture: "Philippians 3:3", dailyQuote: "Spirit-led worship bypasses the mind.", hymnTitle: "Holy, Holy, Holy", hymnLyrics: "Holy, holy, holy! Lord God Almighty...", message: "Worship in spirit means engaging your renewed human spirit...", prayerPoints: "1\n2\n3\n4\n5\n6\n7\n8\n9\n10" }
-        ];
-        saveDevotionals(devotionals);
-    }
-}
-initSampleData();
+        <!-- Devotional Message -->
+        <div style="background:#fffcf9; padding:2.5rem; border-radius:2rem; box-shadow:var(--shadow-sm);">
+          <h3 style="font-size:2rem; margin-bottom:1.5rem;">Devotional Message</h3>
+          <p>The world defines gain as accumulation—more money, more possessions, more influence. But the apostle Paul redefines gain entirely. He calls godliness with contentment “great gain.” Notice that godliness alone is not the whole equation; it is godliness paired with contentment that yields true wealth.</p>
+          
+          <p style="margin-top:1.2rem;">Contentment is not complacency. It is not the absence of ambition. Contentment is the deep inner satisfaction that comes from knowing that Christ is enough. Paul says, “I have learned to be content.” It was a process—a lesson learned through hardship, through hunger, through abundance. He discovered that the secret of contentment is Christ's enabling: “I can do all things through Him who strengthens me.”</p>
 
-// ==================== CALENDAR FUNCTIONS ====================
-function renderCalendar() {
-    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-    document.getElementById('displayMonthYear').innerText = `${monthNames[currentMonth]} ${currentYear}`;
-    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const grid = document.getElementById('calendarGrid');
-    while(grid.children.length > 7) grid.removeChild(grid.lastChild);
-    const devotionals = getDevotionals();
-    const today = new Date();
-    const isCurrentMonth = (today.getMonth() === currentMonth && today.getFullYear() === currentYear);
-    
-    for(let i=0; i<firstDay; i++) { let e=document.createElement('div'); e.className='calendar-day empty'; grid.appendChild(e); }
-    for(let d=1; d<=daysInMonth; d++) {
-        let cell = document.createElement('div');
-        cell.className = 'calendar-day';
-        if(isCurrentMonth && d===today.getDate()) cell.classList.add('current-day');
-        if(selectedDay === d) cell.classList.add('selected');
-        if(devotionals.some(dev=>dev.dayNumber===d)) cell.classList.add('has-devotional');
-        cell.setAttribute('data-day', d);
-        cell.onclick = function() { selectDay(d); };
-        cell.innerHTML = `<span class="day-number">${d}</span>${devotionals.some(dev=>dev.dayNumber===d)?'<span class="devotional-indicator">📖</span>':''}`;
-        grid.appendChild(cell);
-    }
-}
-function selectDay(day) { selectedDay = day; renderCalendar(); showDevotional(day); }
-function changeMonth(delta) {
-    currentMonth += delta;
-    if(currentMonth<0) { currentMonth=11; currentYear--; }
-    else if(currentMonth>11) { currentMonth=0; currentYear++; }
-    renderCalendar();
-    const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
-    if(selectedDay > daysInMonth) selectedDay = 1;
-    selectDay(selectedDay);
-}
+          <p style="margin-top:1.2rem;">The writer of Hebrews echoes this: <strong>“Let your conduct be without covetousness; be content with such things as you have. For He Himself has said, ‘I will never leave you nor forsake you’”</strong> (Hebrews 13:5). The root of discontent is the fear that God will not provide. But His promise of abiding presence is the antidote. If we have Him, we have everything.</p>
 
-// ==================== DISPLAY DEVOTIONAL ====================
-function showDevotional(day) {
-    const devotionals = getDevotionals();
-    const data = devotionals.find(d => d.dayNumber === day);
-    const display = document.getElementById('devotionalDisplay');
-    if(!data) {
-        display.innerHTML = `<div style="text-align:center;padding:40px;"><h3>Day ${day} - Coming Soon</h3><p>This devotional is being prepared. Please check back later.</p></div>`;
-        return;
-    }
-    const prayerList = data.prayerPoints.split('\n').map(p => `<li>${p}</li>`).join('');
-    display.innerHTML = `
-        <div class="devotional-title">📖 ${data.title}</div>
-        <div style="font-size:1.1rem;color:#004d40;margin:10px 0;">${data.scripture}</div>
-        <div class="daily-quote">💬 ${data.dailyQuote}</div>
-        <div class="hymn-section"><span style="font-weight:700;color:#b85e00;">🎵 Hymn: ${data.hymnTitle}</span><br>${data.hymnLyrics}</div>
-        <div style="margin:20px 0;">${data.message}</div>
-        <div class="prayer-points"><h4>🙏 Prayer Points</h4><ol>${prayerList}</ol></div>
-    `;
-}
+          <p style="margin-top:1.2rem;">Jesus warned, <strong>“Take heed and beware of covetousness, for one's life does not consist in the abundance of the things he possesses”</strong> (Luke 12:15). The rich fool thought his soul could feast on grain and goods, but that very night his soul was required. True gain is not measured by barns, but by the riches of grace stored in the heart.</p>
 
-// ==================== ADMIN LOGIN ====================
-function adminLogin() {
-    const entered = document.getElementById('adminPassword').value;
-    if(entered === getStoredPassword()) {
-        isAdminLoggedIn = true;
-        document.getElementById('adminLoginBlock').style.display = 'none';
-        document.getElementById('adminControls').style.display = 'block';
-        loadDevotionalList();
-        // Add counter listener
-        document.getElementById('prayerPoints').addEventListener('input', updatePrayerCounter);
-        document.getElementById('passwordChangeStatus').innerText = '';
-    } else alert('Invalid password.');
-}
+          <p style="margin-top:1.2rem;">Beloved, are you striving for gain that perishes? Or have you discovered the great gain of a life hidden with Christ in God? When you know that you brought nothing into this world and will carry nothing out, you are freed to enjoy what God gives without clinging to it. Contentment is not having everything you want; it is wanting what you already have in Christ. That is great gain indeed.</p>
+        </div>
 
-// ==================== PRAYER POINTS COUNTER ====================
-function updatePrayerCounter() {
-    const textarea = document.getElementById('prayerPoints');
-    const lines = textarea.value.split('\n').filter(l => l.trim() !== '');
-    document.getElementById('prayerCounter').innerText = lines.length + ' lines entered';
-}
+        <!-- Prayer Points -->
+        <div class="prayer-points">
+          <h3 style="font-size:2.2rem;"><i class="fas fa-praying-hands" style="color:var(--primary);"></i> Prophetic Prayer Points</h3>
+          <div class="prayer-grid">
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Father, teach me the secret of contentment in every circumstance.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Lord, I renounce covetousness and the love of money, which is a root of all kinds of evil.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> I declare that godliness with contentment is great gain, and I pursue it by Your Spirit.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Father, help me to hold loosely the things of this world, knowing I brought nothing in and will carry nothing out.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Lord, I thank You that You will never leave me nor forsake me; Your presence is my greatest treasure.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> I receive the grace to be content in times of need and in times of abundance.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Father, free me from the fear of lack; You are my Shepherd, I shall not want.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> I choose to store up treasures in heaven, where moth and rust do not destroy.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Lord, let my life be marked by generosity, not grasping, for it is more blessed to give than to receive.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Thank You, Father, for giving me all things richly to enjoy. I receive them with thanksgiving.</div>
+          </div>
+        </div>
 
-// ==================== LOAD DEVOTIONAL LIST (for management) ====================
-function loadDevotionalList() {
-    const devotionals = getDevotionals();
-    let html = '<table><tr><th>Day</th><th>Title</th><th>Actions</th></tr>';
-    devotionals.sort((a,b)=>a.dayNumber-b.dayNumber).forEach(d=>{
-        html += `<tr><td>Day ${d.dayNumber}</td><td>${d.title}</td><td><button onclick="editDevotional(${d.dayNumber})">✏️ Edit</button> <button class="danger" onclick="deleteDevotional(${d.dayNumber})">🗑️ Delete</button></td></tr>`;
-    });
-    for(let i=1;i<=31;i++) {
-        if(!devotionals.some(d=>d.dayNumber===i))
-            html += `<tr style="background:#f9f9f9;"><td>Day ${i}</td><td colspan="2"><em>Not uploaded</em> <button class="success" onclick="uploadForDay(${i})">📤 Upload</button></td></tr>`;
-    }
-    html += '</table>';
-    document.getElementById('devotionalList').innerHTML = html;
-}
-function uploadForDay(day) {
-    clearForm();
-    document.getElementById('dayNumber').value = day;
-    document.getElementById('formTitle').innerText = `Upload Devotional for Day ${day}`;
-    document.getElementById('devotionalForm').scrollIntoView({behavior: 'smooth'});
-}
-function editDevotional(day) {
-    const devotionals = getDevotionals();
-    const data = devotionals.find(d => d.dayNumber === day);
-    if(!data) return;
-    document.getElementById('editId').value = data.id;
-    document.getElementById('dayNumber').value = data.dayNumber;
-    document.getElementById('title').value = data.title;
-    document.getElementById('scripture').value = data.scripture;
-    document.getElementById('dailyQuote').value = data.dailyQuote;
-    document.getElementById('hymnTitle').value = data.hymnTitle;
-    document.getElementById('hymnLyrics').value = data.hymnLyrics;
-    document.getElementById('message').value = data.message;
-    document.getElementById('prayerPoints').value = data.prayerPoints;
-    document.getElementById('formTitle').innerText = `Edit Devotional - Day ${day}`;
-    updatePrayerCounter();
-    document.getElementById('devotionalForm').scrollIntoView({behavior: 'smooth'});
-}
-function clearForm() {
-    document.getElementById('devotionalForm').reset();
-    document.getElementById('editId').value = '';
-    document.getElementById('formTitle').innerText = 'Upload New Devotional';
-    document.getElementById('importStatus').innerHTML = '';
-    updatePrayerCounter();
-}
+        <!-- Encouragement -->
+        <div class="encouragement-box">
+          <i class="fas fa-feather" style="font-size:2.5rem; color:var(--accent-terra);"></i>
+          <h2 style="font-size:2rem;">Word of Encouragement</h2>
+          <p style="margin:1.5rem 0;">Child of God, you may feel the pressure to keep up, to acquire, to secure your future. But listen to the whisper of the Spirit: you already possess the greatest gain—Christ in you, the hope of glory. When you have Him, you have everything. Let contentment arise in your heart like a spring. Stop striving and start resting in His sufficiency. He knows your needs and has promised to supply. Today, choose the great gain of a satisfied soul.</p>
+          <p><i class="fas fa-hand-peace"></i> “I have learned in whatever state I am, to be content. I can do all things through Christ who strengthens me.” — Philippians 4:11,13</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-// ==================== SAVE DEVOTIONAL (manual form) ====================
-function saveDevotional(event) {
-    event.preventDefault();
-    const dayNumber = parseInt(document.getElementById('dayNumber').value);
-    const title = document.getElementById('title').value.trim();
-    const scripture = document.getElementById('scripture').value.trim();
-    const dailyQuote = document.getElementById('dailyQuote').value.trim();
-    const hymnTitle = document.getElementById('hymnTitle').value.trim();
-    const hymnLyrics = document.getElementById('hymnLyrics').value.trim();
-    const message = document.getElementById('message').value.trim();
-    const prayerPoints = document.getElementById('prayerPoints').value.trim();
-    
-    const lines = prayerPoints.split('\n').filter(l => l.trim() !== '');
-    if(lines.length === 0) {
-        alert('Please enter at least one prayer point.');
-        return false;
-    }
-    
-    let devotionals = getDevotionals();
-    // Remove existing day if any
-    devotionals = devotionals.filter(d => d.dayNumber !== dayNumber);
-    const newDevotional = {
-        id: Date.now(),
-        dayNumber, title, scripture, dailyQuote, hymnTitle, hymnLyrics, message, prayerPoints
-    };
-    devotionals.push(newDevotional);
-    saveDevotionals(devotionals);
-    alert('Devotional saved successfully!');
-    clearForm();
-    loadDevotionalList();
-    if(selectedDay === dayNumber) showDevotional(dayNumber);
-    return false;
-}
+  <!-- Founders bar -->
+  <div class="founders-bar">
+    <div class="container founders-flex">
+      <div class="founder-tag"><i class="fas fa-user-tie"></i> Apostle Solomon S. Adebowale</div>
+      <div class="founder-tag"><i class="fas fa-female"></i> Rev. Debby Adebowale</div>
+      <div><i class="fas fa-book-open" style="color: var(--accent-olive);"></i> Sequences of God</div>
+      <div><i class="fas fa-flag"></i> founded 2020</div>
+    </div>
+  </div>
 
-// ==================== IMPORT FROM WORD ====================
-function importFromWord() {
-    const fileInput = document.getElementById('wordFile');
-    const statusDiv = document.getElementById('importStatus');
-    if (!fileInput.files || fileInput.files.length === 0) {
-        statusDiv.innerHTML = '❌ Please select a Word document.';
-        return;
-    }
-    const file = fileInput.files[0];
-    statusDiv.innerHTML = '⏳ Reading Word document...';
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Connect with us</h2>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <i class="fas fa-map-pin" style="font-size: 2rem; color: var(--primary);"></i>
+          <h3 style="margin: 1rem 0;">Visit</h3>
+          <p>23 Worship Avenue, Lagos, Nigeria</p>
+        </div>
+        <div class="contact-card">
+          <i class="fas fa-phone-alt" style="font-size: 2rem; color: var(--primary);"></i>
+          <h3 style="margin: 1rem 0;">Call</h3>
+          <p>803 421 2065</p>
+        </div>
+        <div class="contact-card">
+          <i class="fas fa-envelope" style="font-size: 2rem; color: var(--primary);"></i>
+          <h3 style="margin: 1rem 0;">Email</h3>
+          <p>trueworshippers.ministries@gmail.com</p>
+        </div>
+        <div class="contact-card">
+          <i class="fas fa-share-alt" style="font-size: 2rem; color: var(--primary);"></i>
+          <h3 style="margin: 1rem 0;">Social</h3>
+          <div class="contact-social">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const arrayBuffer = e.target.result;
-        mammoth.extractRawText({ arrayBuffer: arrayBuffer })
-            .then(function(result) {
-                const fullText = result.value; // raw text
-                // Parse using markers
-                const markers = {
-                    '===TITLE===': 'title',
-                    '===SCRIPTURE===': 'scripture',
-                    '===DAILY_QUOTE===': 'dailyQuote',
-                    '===HYMN_TITLE===': 'hymnTitle',
-                    '===HYMN_LYRICS===': 'hymnLyrics',
-                    '===MESSAGE===': 'message',
-                    '===PRAYER_POINTS===': 'prayerPoints'
-                };
-                let data = {};
-                let remainingText = fullText;
-                for (let marker in markers) {
-                    const field = markers[marker];
-                    const startIdx = remainingText.indexOf(marker);
-                    if (startIdx === -1) {
-                        statusDiv.innerHTML = `❌ Marker ${marker} not found.`;
-                        return;
-                    }
-                    const afterMarker = remainingText.substring(startIdx + marker.length).trim();
-                    // find next marker
-                    let nextMarkerIdx = afterMarker.length;
-                    for (let m in markers) {
-                        const idx = afterMarker.indexOf(m);
-                        if (idx !== -1 && idx < nextMarkerIdx) nextMarkerIdx = idx;
-                    }
-                    let value = afterMarker.substring(0, nextMarkerIdx).trim();
-                    // remove this marker from remaining text for next search
-                    remainingText = afterMarker.substring(nextMarkerIdx);
-                    data[field] = value;
-                }
-                // Validate required fields
-                const required = ['title','scripture','dailyQuote','hymnTitle','hymnLyrics','message','prayerPoints'];
-                for (let f of required) {
-                    if (!data[f]) {
-                        statusDiv.innerHTML = `❌ Missing field: ${f}`;
-                        return;
-                    }
-                }
-                // Validate at least one prayer point
-                const points = data.prayerPoints.split('\n').filter(l => l.trim() !== '');
-                if (points.length === 0) {
-                    statusDiv.innerHTML = `❌ No prayer points found.`;
-                    return;
-                }
-                // Fill the form
-                document.getElementById('title').value = data.title;
-                document.getElementById('scripture').value = data.scripture;
-                document.getElementById('dailyQuote').value = data.dailyQuote;
-                document.getElementById('hymnTitle').value = data.hymnTitle;
-                document.getElementById('hymnLyrics').value = data.hymnLyrics;
-                document.getElementById('message').value = data.message;
-                document.getElementById('prayerPoints').value = data.prayerPoints;
-                updatePrayerCounter();
-                statusDiv.innerHTML = '✅ Form filled from Word. Please review and click Save Devotional.';
-            })
-            .catch(function(err) {
-                statusDiv.innerHTML = '❌ Error parsing Word document: ' + err.message;
-            });
-    };
-    reader.readAsArrayBuffer(file);
-}
-
-// ==================== DELETE ====================
-function deleteDevotional(day) {
-    if(confirm(`Delete Day ${day}?`)) {
-        let devotionals = getDevotionals().filter(d => d.dayNumber !== day);
-        saveDevotionals(devotionals);
-        loadDevotionalList();
-        if(selectedDay === day) showDevotional(day);
-    }
-}
-
-// ==================== CHANGE PASSWORD ====================
-function changePassword(event) {
-    event.preventDefault();
-    const current = document.getElementById('currentPassword').value;
-    const newPass = document.getElementById('newPassword').value;
-    const confirm = document.getElementById('confirmPassword').value;
-    const statusSpan = document.getElementById('passwordChangeStatus');
-
-    if (current !== getStoredPassword()) {
-        statusSpan.style.color = 'red';
-        statusSpan.innerText = 'Current password is incorrect.';
-        return false;
-    }
-    if (newPass !== confirm) {
-        statusSpan.style.color = 'red';
-        statusSpan.innerText = 'New passwords do not match.';
-        return false;
-    }
-    if (newPass.length < 4) {
-        statusSpan.style.color = 'red';
-        statusSpan.innerText = 'Password must be at least 4 characters.';
-        return false;
-    }
-    // Save new password
-    localStorage.setItem('twemi_admin_password', newPass);
-    statusSpan.style.color = 'green';
-    statusSpan.innerText = 'Password updated successfully.';
-    document.getElementById('currentPassword').value = '';
-    document.getElementById('newPassword').value = '';
-    document.getElementById('confirmPassword').value = '';
-    return false;
-}
-
-// ==================== INIT ====================
-window.onload = function() {
-    renderCalendar();
-    selectDay(selectedDay);
-    document.getElementById('admin').style.display = 'none';
-    // Initialize counter if textarea exists
-    const prayerTA = document.getElementById('prayerPoints');
-    if(prayerTA) prayerTA.addEventListener('input', updatePrayerCounter);
-};
-</script>
-</body>
-</html>
+      <!-- Netlify Form -->
+      <div class="contact-form">
+        <h3 style="font-size: 2rem; margin-bottom: 2rem; text-align: center;">Send a prayer request</h3>
+        <
