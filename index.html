@@ -66,7 +66,121 @@
       }
     }
 
-    /* ----- responsive navbar with dropdown (mobile-first) ----- */
+    /* ----- church radio player (improved) ----- */
+    .radio-player {
+      background: #2e2823;
+      color: #f0e7dc;
+      padding: 0.8rem 1.25rem;
+      border-bottom: 3px solid var(--accent-gold);
+      position: relative;
+      z-index: 101;
+    }
+    .radio-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    .radio-info {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.95rem;
+    }
+    .radio-info i {
+      color: var(--accent-gold);
+      font-size: 1.4rem;
+    }
+    .radio-info span {
+      font-weight: 600;
+      color: white;
+    }
+    .radio-controls {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .radio-btn {
+      background: var(--accent-gold);
+      border: none;
+      color: #2b241f;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .radio-btn:hover {
+      background: var(--primary-light);
+      transform: scale(1.05);
+    }
+    .radio-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .radio-volume {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: white;
+    }
+    .radio-volume i {
+      font-size: 1.2rem;
+    }
+    .radio-volume input {
+      width: 100px;
+      cursor: pointer;
+      accent-color: var(--accent-gold);
+    }
+    .now-playing {
+      font-size: 0.9rem;
+      color: #d4c5b6;
+      max-width: 300px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .download-link {
+      color: var(--accent-gold);
+      background: rgba(255,255,255,0.1);
+      padding: 0.3rem 1rem;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border: 1px solid var(--accent-gold);
+    }
+    .download-link:hover {
+      background: var(--accent-gold);
+      color: #2b241f;
+    }
+    .error-message {
+      color: #ffaa88;
+      font-size: 0.8rem;
+      margin-left: 1rem;
+    }
+    @media (max-width: 600px) {
+      .radio-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .now-playing {
+        max-width: 100%;
+      }
+    }
+
+    /* ----- responsive navbar with dropdown ----- */
     .navbar {
       position: sticky;
       top: 0;
@@ -142,7 +256,6 @@
       }
     }
 
-    /* desktop navigation */
     .nav-links {
       display: none;
       gap: 1.5rem;
@@ -169,7 +282,6 @@
       border-bottom-color: var(--accent-gold);
     }
 
-    /* dropdown menu for mobile */
     .dropdown-toggle {
       display: block;
       background: none;
@@ -257,7 +369,7 @@
       color: white;
     }
 
-    /* ----- Hero Section (mobile optimized) ----- */
+    /* ----- Hero Section ----- */
     .hero {
       background: linear-gradient(120deg, #f0e7dc, #e5d6c6);
       padding: 3rem 0 4rem;
@@ -391,7 +503,6 @@
       }
     }
 
-    /* ----- global sections (mobile optimized) ----- */
     section {
       padding: 3rem 0;
     }
@@ -434,7 +545,6 @@
       }
     }
 
-    /* about card */
     .about-card {
       background: var(--bg-card);
       border-radius: var(--radius-card);
@@ -451,7 +561,6 @@
       }
     }
 
-    /* Vision cards (responsive grid) */
     .vision-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -498,7 +607,6 @@
       color: var(--primary-dark);
     }
 
-    /* devotional main (mobile-optimized) */
     .devotional-main {
       background: white;
       border-radius: var(--radius-card);
@@ -660,7 +768,6 @@
       }
     }
 
-    /* founders bar */
     .founders-bar {
       background: #fff6ef;
       padding: 1.5rem 0;
@@ -694,7 +801,6 @@
       font-size: 0.95rem;
     }
 
-    /* contact grid */
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -806,6 +912,34 @@
   </style>
 </head>
 <body>
+  <!-- Church Radio Player (improved with download fallback) -->
+  <div class="radio-player">
+    <div class="radio-container">
+      <div class="radio-info">
+        <i class="fas fa-satellite-dish"></i>
+        <div>
+          <span>Church Radio</span>
+          <div class="now-playing" id="nowPlaying">He Died For Me - Kurt Karr</div>
+        </div>
+      </div>
+      <div class="radio-controls">
+        <button class="radio-btn" id="playPauseBtn" aria-label="Play/Pause"><i class="fas fa-play" id="playPauseIcon"></i></button>
+        <div class="radio-volume">
+          <i class="fas fa-volume-up"></i>
+          <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
+        </div>
+        <a href="https://www.dropbox.com/scl/fi/nemsfd1dq7junixqg12he/020.-he-died-for-me-kurt-karr.mp3?rlkey=a7c57ho5f3svw86z5gx3pxj47&st=5dhk88r0&dl=1" download class="download-link" target="_blank"><i class="fas fa-download"></i> Download</a>
+        <audio id="radioAudio" preload="metadata" loop>
+          <source src="https://www.dropbox.com/scl/fi/nemsfd1dq7junixqg12he/020.-he-died-for-me-kurt-karr.mp3?rlkey=a7c57ho5f3svw86z5gx3pxj47&st=5dhk88r0&dl=1" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+    <div id="audioError" class="error-message" style="display: none; margin-top: 0.5rem;">
+      <i class="fas fa-exclamation-triangle"></i> Audio streaming may not work directly in your browser. Please use the download button.
+    </div>
+  </div>
+
   <!-- Sticky Nav with Dropdown -->
   <nav class="navbar">
     <div class="logo-area">
@@ -900,19 +1034,19 @@
     </div>
   </section>
 
-  <!-- STATIC DEVOTIONAL SECTION (7th March 2026 - GROWING THROUGH THE PAINFUL TIMES) -->
+  <!-- STATIC DEVOTIONAL SECTION (8th March 2026 - A Journey to the Heart of the Gospel) -->
   <section id="devotionals" class="devotional-day">
     <div class="container">
       <h2 class="section-title">Sequences of God Devotionals</h2>
       <div class="devotional-main">
         <div class="devotional-header">
-          <span class="devotional-date"><i class="far fa-calendar-alt"></i> 7th March 2026</span>
-          <h1 class="devotional-title">GROWING THROUGH THE PAINFUL TIMES</h1>
+          <span class="devotional-date"><i class="far fa-calendar-alt"></i> 8th March 2026</span>
+          <h1 class="devotional-title">A JOURNEY TO THE HEART OF THE GOSPEL</h1>
           <div class="devotional-authors">
             Apostle Segun D. A. & Reverend Mrs. Debby F. A. Solomon
           </div>
           <div style="background:#fcf4ec; padding:0.8rem 1.5rem; border-radius:60px; display:inline-block; margin-top:1rem;">
-            <i class="fas fa-music" style="color:var(--accent-terra);"></i> Hymn: “It Is Well with My Soul”
+            <i class="fas fa-music" style="color:var(--accent-terra);"></i> Hymn: “And Can It Be That I Should Gain?”
           </div>
         </div>
 
@@ -920,53 +1054,51 @@
         <div class="action-buttons">
           <button class="action-btn share" id="shareBtn"><i class="fas fa-share-alt"></i> Share</button>
           <button class="action-btn print" id="printBtn"><i class="fas fa-print"></i> Print</button>
-          <button class="action-btn like" id="likeBtn"><i class="fas fa-heart"></i> Like <span id="likeCount">290</span></button>
+          <button class="action-btn like" id="likeBtn"><i class="fas fa-heart"></i> Like <span id="likeCount">305</span></button>
           <button class="action-btn listen" id="listenBtn"><i class="fas fa-headphones"></i> <span id="listenText">Listen</span></button>
         </div>
 
         <!-- Daily Quote -->
         <div class="daily-quote-card">
           <i class="fas fa-quote-left" style="color:var(--accent-terra); margin-right:1rem;"></i>
-          "Pain is not a detour from God's plan; it is part of the path. In the pressing, the fragrance is released."
+          "The gospel is not a staircase to God but a declaration that He has come down the stairs to us."
         </div>
 
         <!-- Bible Passage -->
         <div class="bible-passage">
-          <h4><i class="fas fa-bible"></i> Romans 5:3-5 & James 1:2-4 (NKJV)</h4>
+          <h4><i class="fas fa-bible"></i> Romans 1:16-17 & 1 Corinthians 15:3-5 (NKJV)</h4>
           <div style="background:#fffcf8; padding:1.2rem; border-radius:1.2rem; margin-top:1rem;">
-            <strong>Romans 5:3-5:</strong> “And not only that, but we also glory in tribulations, knowing that tribulation produces perseverance; and perseverance, character; and character, hope. Now hope does not disappoint, because the love of God has been poured out in our hearts by the Holy Spirit who was given to us.”<br><br>
-            <strong>James 1:2-4:</strong> “My brethren, count it all joy when you fall into various trials, knowing that the testing of your faith produces patience. But let patience have its perfect work, that you may be perfect and complete, lacking nothing.”
+            <strong>Romans 1:16-17:</strong> “For I am not ashamed of the gospel of Christ, for it is the power of God to salvation for everyone who believes, for the Jew first and also for the Greek. For in it the righteousness of God is revealed from faith to faith; as it is written, ‘The just shall live by faith.’”<br><br>
+            <strong>1 Corinthians 15:3-5:</strong> “For I delivered to you first of all that which I also received: that Christ died for our sins according to the Scriptures, and that He was buried, and that He rose again the third day according to the Scriptures, and that He was seen by Cephas, then by the twelve.”
           </div>
         </div>
 
         <!-- Devotional Message -->
         <div style="background:#fffcf9; padding:1.5rem; border-radius:1.5rem; box-shadow:var(--shadow-sm);">
           <h3 style="font-size:1.8rem; margin-bottom:1.2rem;">Devotional Message</h3>
-          <p>No one welcomes pain, yet it is an unavoidable part of life. The question is not whether we will face painful times, but how we will respond to them. The Scriptures offer a radical perspective: we can actually rejoice in our sufferings, not because pain is pleasant, but because we know what it produces.</p>
+          <p>The gospel is the good news that God has acted decisively in history to rescue sinners. At its heart is not a philosophy, a moral code, or a self-help program—it is a Person: Jesus Christ. Paul calls it the power of God for salvation, because it actually accomplishes what it promises. It is not advice; it is news.</p>
           
-          <p style="margin-top:1rem;">Paul writes that tribulation produces perseverance, and perseverance produces character, and character produces hope—a hope that does not disappoint. Pain, when embraced with faith, becomes a forge where our character is shaped. Just as pressure turns coal into diamonds, so trials, under the hand of God, transform our fragile faith into steadfast trust.</p>
+          <p style="margin-top:1rem;">To journey to the heart of the gospel is to encounter four realities: Christ died for our sins (substitution), He was buried (real death), He rose again (victory), and He was seen (eyewitness testimony). This is not myth but history. The resurrection validates that His death was acceptable to the Father and that He is Lord.</p>
 
-          <p style="margin-top:1rem;">James echoes this: the testing of our faith produces patience, and when patience has its perfect work, we become complete, lacking nothing. The painful times are not meant to break us but to mature us. Joseph understood this. After years of slavery and imprisonment, he told his brothers, <strong>“You meant evil against me; but God meant it for good”</strong> (Genesis 50:20). What they intended for harm, God used to save many lives.</p>
+          <p style="margin-top:1rem;">Why must we travel to this heart again and again? Because we tend to drift. We add human effort, religious rituals, or performance to grace. Paul rebuked the Galatians: <strong>“Having begun in the Spirit, are you now being made perfect by the flesh?”</strong> (Galatians 3:3). The gospel calls us back to the foundation: we are saved by grace alone, through faith alone, in Christ alone.</p>
 
-          <p style="margin-top:1rem;">The writer of Hebrews reminds us that no discipline seems pleasant at the time, but painful—later on, however, it produces a harvest of righteousness and peace for those who have been trained by it (Hebrews 12:11). The “later on” is key. In the moment, we may not understand, but growth is happening beneath the surface. The roots go deeper, the branches stretch stronger.</p>
-
-          <p style="margin-top:1rem;">If you are in a painful season today, take heart. God has not abandoned you. He is at work, refining you like silver. The process is uncomfortable, but the outcome is pure. Let Him do His deep work. Trust that He who began a good work in you will carry it on to completion. The pain will not last forever, but the growth will.</p>
+          <p style="margin-top:1rem;">Today, let the gospel wash over you afresh. You are not accepted because of your goodness; you are accepted because of Christ's goodness credited to you. Rest in that finished work. The journey to the heart of the gospel always ends at the cross—and then leads to an empty tomb.</p>
         </div>
 
         <!-- Prayer Points -->
         <div class="prayer-points">
           <h3 style="font-size:1.8rem;"><i class="fas fa-praying-hands" style="color:var(--primary);"></i> Prophetic Prayer Points</h3>
           <div class="prayer-grid">
-            <div class="prayer-item"><i class="fas fa-check-circle"></i> Father, I thank You that You are with me in every painful time.</div>
-            <div class="prayer-item"><i class="fas fa-check-circle"></i> Lord, give me grace to see Your purpose in my trials.</div>
-            <div class="prayer-item"><i class="fas fa-check-circle"></i> I receive perseverance to endure and character to be formed.</div>
-            <div class="prayer-item"><i class="fas fa-check-circle"></i> Father, let hope arise in my heart that does not disappoint.</div>
-            <div class="prayer-item"><i class="fas fa-check-circle"></i> I declare that the testing of my faith produces patience.</div>
-            <div class="prayer-item"><i class="fas fa-check-circle"></i> Lord, make me complete, lacking nothing, through this process.</div>
-            <div class="prayer-item"><i class="fas fa-check-circle"></i> I trust that You are working all things for my good.</div>
-            <div class="prayer-item"><i class="fas fa-check-circle"></i> Father, let the roots of my faith go deep during this trial.</div>
-            <div class="prayer-item"><i class="fas fa-check-circle"></i> I receive the peaceable fruit of righteousness from Your discipline.</div>
-            <div class="prayer-item"><i class="fas fa-check-circle"></i> Thank You, Lord, for the harvest of growth that is coming.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Father, I thank You for the gospel—the power of God for my salvation.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Lord, help me never to be ashamed of the gospel, but to live in its power.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> I receive afresh the truth that Christ died for my sins and rose again.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Father, keep me from adding human effort to Your finished work.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> I declare that I am justified by faith and have peace with God through Jesus Christ.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Lord, let the gospel shape my identity, my security, and my purpose.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> I renounce every attempt to earn Your favor; I rest in grace alone.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Father, fill me with boldness to share this good news with others.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> I thank You that the righteousness of God is revealed in the gospel from faith to faith.</div>
+            <div class="prayer-item"><i class="fas fa-check-circle"></i> Thank You, Lord, for the living hope I have through the resurrection of Jesus Christ.</div>
           </div>
         </div>
 
@@ -974,8 +1106,8 @@
         <div class="encouragement-box">
           <i class="fas fa-feather" style="font-size:2rem; color:var(--accent-terra);"></i>
           <h2 style="font-size:1.8rem;">Word of Encouragement</h2>
-          <p style="margin:1rem 0;">Beloved, you may feel pressed on every side, but you are not crushed. Perplexed, but not in despair. Persecuted, but not forsaken. Struck down, but not destroyed. The pain you feel today is producing something eternal. Let God complete His work in you. He is the Potter, and you are the clay—even when the wheel turns roughly, He is shaping a vessel of honor. Hold on. Growth is happening. The morning is coming.</p>
-          <p><i class="fas fa-hand-peace"></i> “Weeping may endure for a night, but joy comes in the morning.” — Psalm 30:5</p>
+          <p style="margin:1rem 0;">Beloved, the gospel is not only the door through which you entered the kingdom; it is the path on which you walk every day. Whenever you stumble, look again at the cross—it shows you how much you are loved. Whenever you grow proud, look again at the cross—it humbles you. And whenever you fear death, look at the empty tomb—it guarantees your future. Journey to the heart of the gospel daily, and let it recalibrate your soul.</p>
+          <p><i class="fas fa-hand-peace"></i> “For I am not ashamed of the gospel of Christ, for it is the power of God to salvation for everyone who believes.” — Romans 1:16</p>
         </div>
       </div>
     </div>
@@ -1051,7 +1183,7 @@
   <!-- Back to Top -->
   <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
 
-  <!-- JavaScript for share, print, like, listen, dropdown -->
+  <!-- JavaScript for radio, share, print, like, listen, dropdown -->
   <script>
     (function() {
       // Dropdown toggle
@@ -1064,11 +1196,50 @@
         });
       });
 
-      // Share
+      // Radio player
+      const audio = document.getElementById('radioAudio');
+      const playPauseBtn = document.getElementById('playPauseBtn');
+      const playPauseIcon = document.getElementById('playPauseIcon');
+      const volumeSlider = document.getElementById('volumeSlider');
+      const errorDiv = document.getElementById('audioError');
+
+      // Show error if audio fails to load
+      audio.addEventListener('error', function() {
+        errorDiv.style.display = 'block';
+        playPauseBtn.disabled = true;
+      });
+
+      // Play/Pause
+      playPauseBtn.addEventListener('click', function() {
+        if (audio.paused) {
+          audio.play().catch(e => {
+            errorDiv.style.display = 'block';
+          });
+          playPauseIcon.className = 'fas fa-pause';
+        } else {
+          audio.pause();
+          playPauseIcon.className = 'fas fa-play';
+        }
+      });
+
+      // Volume control
+      volumeSlider.addEventListener('input', function(e) {
+        audio.volume = e.target.value;
+      });
+
+      // Reset icon when audio ends (though loop is true, but just in case)
+      audio.addEventListener('pause', function() {
+        playPauseIcon.className = 'fas fa-play';
+      });
+      audio.addEventListener('play', function() {
+        playPauseIcon.className = 'fas fa-pause';
+      });
+
+      // Share button
       document.getElementById('shareBtn').addEventListener('click', function() {
         if (navigator.share) {
           navigator.share({
-            title: 'Growing Through the Painful Times',
+            title: 'A Journey to the Heart of the Gospel',
             text: 'Daily devotional from True Worshippers',
             url: window.location.href
           });
@@ -1077,13 +1248,13 @@
         }
       });
 
-      // Print
+      // Print button
       document.getElementById('printBtn').addEventListener('click', function() {
         window.print();
       });
 
-      // Like counter
-      let likeCount = 290;
+      // Like button
+      let likeCount = 305;
       let liked = false;
       const likeBtn = document.getElementById('likeBtn');
       const likeSpan = document.getElementById('likeCount');
@@ -1094,7 +1265,7 @@
         likeBtn.style.backgroundColor = liked ? '#b2472e' : 'var(--accent-terra)';
       });
 
-      // Listen (text-to-speech)
+      // Listen button (text-to-speech)
       const listenBtn = document.getElementById('listenBtn');
       const listenSpan = document.getElementById('listenText');
       let speaking = false;
